@@ -3,6 +3,8 @@ plugins {
   id "com.github.johnrengelman.shadow" version "5.0.0"
   id "application"
   id "checkstyle"
+  id "findbugs"
+  id "pmd"
 }
 
 
@@ -45,6 +47,18 @@ checkstyle {
   configFile file("${rootDir}/checkstyle.xml")
 }
 
+
+findbugs {
+  toolVersion "3.0.1"
+}
+
+pmd {
+  toolVersion "6.20.0"
+  consoleOutput true
+  ruleSets = []
+  ruleSetFiles files("${rootDir}/pmd.xml")
+}
+
 test.classpath += configurations.developmentOnly
 
 mainClassName = "fi.vamk.beceps.Application"
@@ -54,7 +68,7 @@ test {
 }
 tasks.withType(JavaCompile) {
   options.encoding = "UTF-8"
-  options.compilerArgs.add('-parameters')
+  options.compilerArgs.add("-parameters")
 }
 
 shadowJar {
@@ -62,5 +76,5 @@ shadowJar {
 }
 
 run.classpath += configurations.developmentOnly
-run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
-compileJava.options.compilerArgs += '-parameters'
+run.jvmArgs("-noverify", "-XX:TieredStopAtLevel=1", "-Dcom.sun.management.jmxremote")
+compileJava.options.compilerArgs += "-parameters"

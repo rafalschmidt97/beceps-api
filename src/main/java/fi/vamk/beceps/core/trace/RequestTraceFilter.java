@@ -13,6 +13,7 @@ import org.reactivestreams.Publisher;
 @Filter("/**")
 @Slf4j
 public class RequestTraceFilter implements HttpServerFilter {
+  @Override
   public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
     return Flowable.fromCallable(() -> {
       if (!request.getPath().equals("/favicon.ico")) {
