@@ -1,0 +1,10 @@
+language: java
+jdk:
+  - oraclejdk11
+
+git:
+  depth: 5
+
+script:
+  - gradle check
+  - gradle build
