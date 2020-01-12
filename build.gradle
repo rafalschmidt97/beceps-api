@@ -16,7 +16,7 @@ repositories {
 
 configurations {
     // for dependencies that are needed for development only
-    developmentOnly 
+    developmentOnly
 }
 
 dependencies {
@@ -40,7 +40,7 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "fi.vamk.Application"
+mainClassName = "fi.vamk.beceps.Application"
 // use JUnit 5 platform
 test {
     useJUnitPlatform()

@@ -1,4 +1,4 @@
-package fi.vamk;
+package fi.vamk.beceps;
 
 import io.micronaut.runtime.Micronaut;
 

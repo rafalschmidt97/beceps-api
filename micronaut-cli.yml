@@ -1,5 +1,5 @@
 profile: service
-defaultPackage: fi.vamk
+defaultPackage: fi.vamk.beceps
 ---
 testFramework: junit
 sourceLanguage: java
