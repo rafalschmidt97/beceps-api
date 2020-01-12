@@ -17,16 +17,16 @@ public class RequestTraceFilter implements HttpServerFilter {
     return Flowable.fromCallable(() -> {
       if (!request.getPath().equals("/favicon.ico")) {
         log.info(
-          "Request: {} {} {}",
-          request.getMethod(),
-          request.getUri(),
-          request.getBody().isPresent() ? request.getBody() : ""
+            "Request: {} {} {}",
+            request.getMethod(),
+            request.getUri(),
+            request.getBody().isPresent() ? request.getBody() : ""
         );
       }
 
       return true;
     }).subscribeOn(Schedulers.io())
-      .switchMap((aBoolean) -> chain.proceed(request))
+      .switchMap(call -> chain.proceed(request))
       .doOnNext(res ->
         res.getHeaders().add("X-Trace-Enabled", "true")
       );

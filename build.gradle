@@ -1,43 +1,48 @@
 plugins {
-    id "net.ltgt.apt-eclipse" version "0.21"
-    id "com.github.johnrengelman.shadow" version "5.0.0"
-    id "application"
+  id "net.ltgt.apt-eclipse" version "0.21"
+  id "com.github.johnrengelman.shadow" version "5.0.0"
+  id "application"
+  id "checkstyle"
 }
-
 
 
 version "0.1"
 group "fi.vamk"
 
 repositories {
-    mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
+  mavenCentral()
+  maven { url "https://jcenter.bintray.com" }
 }
 
 configurations {
-    // for dependencies that are needed for development only
-    developmentOnly
+  // for dependencies that are needed for development only
+  developmentOnly
 }
 
 dependencies {
-    compileOnly 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor 'org.projectlombok:lombok:1.18.10'
-    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor "io.micronaut:micronaut-validation"
-    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    implementation "io.micronaut:micronaut-inject"
-    implementation "io.micronaut:micronaut-validation"
-    implementation "io.micronaut:micronaut-runtime"
-    implementation "io.micronaut:micronaut-http-server-netty"
-    implementation "io.micronaut:micronaut-http-client"
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
-    testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testAnnotationProcessor "io.micronaut:micronaut-inject-java"
-    testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
-    testImplementation "org.junit.jupiter:junit-jupiter-api"
-    testImplementation "io.micronaut.test:micronaut-test-junit5"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+  compileOnly "org.projectlombok:lombok:1.18.10"
+  annotationProcessor "org.projectlombok:lombok:1.18.10"
+  annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+  annotationProcessor "io.micronaut:micronaut-inject-java"
+  annotationProcessor "io.micronaut:micronaut-validation"
+  implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+  implementation "io.micronaut:micronaut-inject"
+  implementation "io.micronaut:micronaut-validation"
+  implementation "io.micronaut:micronaut-runtime"
+  implementation "io.micronaut:micronaut-http-server-netty"
+  implementation "io.micronaut:micronaut-http-client"
+  runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+  testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+  testAnnotationProcessor "io.micronaut:micronaut-inject-java"
+  testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+  testImplementation "org.junit.jupiter:junit-jupiter-api"
+  testImplementation "io.micronaut.test:micronaut-test-junit5"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+}
+
+checkstyle {
+  toolVersion "8.28"
+  configFile file("${rootDir}/checkstyle.xml")
 }
 
 test.classpath += configurations.developmentOnly
@@ -45,15 +50,15 @@ test.classpath += configurations.developmentOnly
 mainClassName = "fi.vamk.beceps.Application"
 // use JUnit 5 platform
 test {
-    useJUnitPlatform()
+  useJUnitPlatform()
 }
-tasks.withType(JavaCompile){
-    options.encoding = "UTF-8"
-    options.compilerArgs.add('-parameters')
+tasks.withType(JavaCompile) {
+  options.encoding = "UTF-8"
+  options.compilerArgs.add('-parameters')
 }
 
 shadowJar {
-    mergeServiceFiles()
+  mergeServiceFiles()
 }
 
 run.classpath += configurations.developmentOnly
