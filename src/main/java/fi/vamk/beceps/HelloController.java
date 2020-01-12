@@ -1,5 +1,6 @@
 package fi.vamk.beceps;
 
+import fi.vamk.beceps.common.exceptions.BadRequestException;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -16,6 +17,6 @@ public class HelloController {
   @Get("error")
   @Produces(MediaType.TEXT_PLAIN)
   public String error() {
-    throw new RuntimeException("Try to catch me!");
+    throw new BadRequestException("Try to catch me!");
   }
 }
