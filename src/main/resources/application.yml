@@ -3,16 +3,16 @@ micronaut:
     name: beceps
 datasources:
   default:
-    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
-    schema-generate: CREATE_DROP
-    dialect: H2
+    url: jdbc:mysql://localhost:3308/beceps
+    username: root
+    password: zaq1@WSX
+    driverClassName: com.mysql.cj.jdbc.Driver
 jpa:
   default:
     properties:
       hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         hbm2ddl:
-          auto: update
-        show_sql: true
+          auto: validate
+#        show_sql: true
