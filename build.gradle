@@ -3,10 +3,9 @@ plugins {
   id "com.github.johnrengelman.shadow" version "5.0.0"
   id "application"
   id "checkstyle"
-  id "findbugs"
+  id "com.github.spotbugs" version "3.0.0"
   id "pmd"
 }
-
 
 version "0.1"
 group "fi.vamk"
@@ -24,6 +23,7 @@ configurations {
 dependencies {
   compileOnly "org.projectlombok:lombok:1.18.10"
   annotationProcessor "org.projectlombok:lombok:1.18.10"
+
   annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
   annotationProcessor "io.micronaut:micronaut-inject-java"
   annotationProcessor "io.micronaut:micronaut-validation"
@@ -37,9 +37,15 @@ dependencies {
   testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
   testAnnotationProcessor "io.micronaut:micronaut-inject-java"
   testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+
   testImplementation "org.junit.jupiter:junit-jupiter-api"
   testImplementation "io.micronaut.test:micronaut-test-junit5"
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+  annotationProcessor "io.micronaut.data:micronaut-data-processor:1.0.0.M5"
+  compile "io.micronaut.data:micronaut-data-hibernate-jpa:1.0.0.M5"
+  runtime "io.micronaut.configuration:micronaut-jdbc-tomcat"
+  runtime "com.h2database:h2"
 }
 
 checkstyle {
@@ -47,14 +53,13 @@ checkstyle {
   configFile file("${rootDir}/checkstyle.xml")
 }
 
-
-findbugs {
-  toolVersion "3.0.1"
+spotbugs {
+  toolVersion "4.0.0-beta4"
+  excludeFilter file("${rootDir}/spotbugs.xml")
 }
 
 pmd {
   toolVersion "6.20.0"
-  consoleOutput true
   ruleSets = []
   ruleSetFiles files("${rootDir}/pmd.xml")
 }
@@ -66,6 +71,7 @@ mainClassName = "fi.vamk.beceps.Application"
 test {
   useJUnitPlatform()
 }
+
 tasks.withType(JavaCompile) {
   options.encoding = "UTF-8"
   options.compilerArgs.add("-parameters")
@@ -73,6 +79,48 @@ tasks.withType(JavaCompile) {
 
 shadowJar {
   mergeServiceFiles()
+}
+
+checkstyleMain {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
+
+checkstyleTest {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
+
+spotbugsMain {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
+
+spotbugsTest {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
+
+pmdMain {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
+
+pmdTest {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
 }
 
 run.classpath += configurations.developmentOnly
