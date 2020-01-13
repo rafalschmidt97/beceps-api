@@ -8,6 +8,6 @@ public class NotFoundException extends CustomHttpException {
   }
 
   public NotFoundException(Class entity, Object key) {
-    this(String.format("%s(%s) not found.", entity.getSimpleName(), key));
+    this(String.format("%s(%s) could not be found.", entity.getSimpleName(), key));
   }
 }
