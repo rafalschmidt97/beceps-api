@@ -6,3 +6,14 @@ create table account
     created_at   datetime(6) not null default current_timestamp(6),
     primary key (id)
 ) engine = INNODB;
+
+create table refresh_token
+(
+    id         bigint      not null auto_increment,
+    issued_at  datetime(6) not null default current_timestamp(6),
+    expired_at datetime(6) not null,
+    token      varchar(50) not null,
+    account_id bigint      not null,
+    primary key (id),
+    foreign key (account_id) references account (id) on delete cascade
+) engine = INNODB;
