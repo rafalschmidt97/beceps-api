@@ -2,9 +2,9 @@
 # this hook is in SCM so that it can be shared
 # to install it, create a symbolic link in the projects .git/hooks folder
 #
-#       i.e. - from the .git/hooks directory, run
-#               $ chmod 777 pre-commit.sh
-#               $ cp pre-commit.sh .git/hooks/pre-commit
+#       i.e. - from root directory run
+#               $ chmod 777 ./utils/pre-commit.sh
+#               $ cp ./utils/pre-commit.sh .git/hooks/pre-commit
 #
 # to skip the tests, run with the --no-verify argument
 #       i.e. - $ 'git commit --no-verify'
