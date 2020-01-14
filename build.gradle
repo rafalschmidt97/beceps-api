@@ -50,6 +50,12 @@ dependencies {
   compile "io.micronaut.data:micronaut-data-hibernate-jpa:1.0.0.M5"
   runtime "io.micronaut.configuration:micronaut-jdbc-tomcat"
   compile "mysql:mysql-connector-java:8.0.18"
+
+  annotationProcessor "io.micronaut:micronaut-security"
+  compile "io.micronaut:micronaut-security"
+  compile 'io.micronaut.configuration:micronaut-security-oauth2:1.2.3'
+  compile 'io.micronaut:micronaut-security-jwt'
+  compile "at.favre.lib:bcrypt:0.9.0"
 }
 
 flyway {
@@ -65,7 +71,7 @@ checkstyle {
 
 spotbugs {
   toolVersion "4.0.0-beta4"
-  excludeFilter file("${rootDir}/tools/lint/spotbugs.xml")
+  excludeFilter file("${rootDir}/tools/lint/spotbugs-exclude.xml")
 }
 
 pmd {
