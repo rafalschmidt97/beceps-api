@@ -1,3 +1,26 @@
 micronaut:
   application:
     name: beceps
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+datasources:
+  default:
+    url: jdbc:mysql://localhost:3308/beceps
+    username: root
+    password: zaq1@WSX
+    driverClassName: com.mysql.cj.jdbc.Driver
+jpa:
+  default:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        hbm2ddl:
+          auto: validate
+#        show_sql: true

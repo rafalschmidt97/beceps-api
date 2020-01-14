@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter>
+  <!-- Reason: Micronaut Data @Entity causes some problems -->
+  <Match>
+    <Bug pattern="NP_NONNULL_PARAM_VIOLATION" />
+  </Match>
+
+  <!-- Reason: In most cases returning reference it is fine -->
+  <Match>
+    <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2" />
+  </Match>
+</FindBugsFilter>
