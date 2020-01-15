@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 public class AuthLogoutAllHandler {
   private final RefreshTokensRepository refreshTokensRepository;
 
-  public HttpResponse handle(Long accountId) {
-    refreshTokensRepository.deleteAllByAccountId(accountId);
+  public HttpResponse handle(Long userId) {
+    refreshTokensRepository.deleteAllByUserId(userId);
     return HttpResponse.ok();
   }
 }

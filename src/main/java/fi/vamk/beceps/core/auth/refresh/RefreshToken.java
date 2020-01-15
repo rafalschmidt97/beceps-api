@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.refresh;
 
-import fi.vamk.beceps.accounts.Account;
+import fi.vamk.beceps.users.User;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,16 +29,16 @@ public class RefreshToken {
   @Column(nullable = false, length = 512)
   private String token;
 
-  @Column(name = "account_id", nullable = false)
-  private Long accountId;
+  @Column(name = "user_id", nullable = false)
+  private Long userId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "account_id", insertable = false, updatable = false)
-  private Account account;
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  private User user;
 
-  public RefreshToken(String token, Long accountId) {
+  public RefreshToken(String token, Long userId) {
     this.issuedAt = new Date();
     this.token = token;
-    this.accountId = accountId;
+    this.userId = userId;
   }
 }

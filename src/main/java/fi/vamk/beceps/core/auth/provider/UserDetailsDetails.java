@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.provider;
 
-import fi.vamk.beceps.accounts.Account;
+import fi.vamk.beceps.users.User;
 import io.micronaut.security.authentication.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,18 +12,18 @@ import lombok.Setter;
 import lombok.val;
 
 @EqualsAndHashCode(callSuper = true)
-public class DatabaseAccountDetails extends UserDetails {
+public class UserDetailsDetails extends UserDetails {
   @Getter
   @Setter
   private Long id;
 
-  public DatabaseAccountDetails(String username, Collection<String> roles, Long id) {
+  public UserDetailsDetails(String username, Collection<String> roles, Long id) {
     super(username, roles);
     this.id = id;
   }
 
-  public DatabaseAccountDetails(Account account) {
-    this(account.getEmail(), Collections.emptyList(), account.getId());
+  public UserDetailsDetails(User user) {
+    this(user.getEmail(), Collections.emptyList(), user.getId());
   }
 
   @Override

@@ -2,7 +2,7 @@ package fi.vamk.beceps.core.auth.token;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 import fi.vamk.beceps.common.exceptions.InternalServerErrorException;
-import fi.vamk.beceps.core.auth.provider.DatabaseAccountDetails;
+import fi.vamk.beceps.core.auth.provider.UserDetailsDetails;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.runtime.ApplicationConfiguration;
 import io.micronaut.security.authentication.UserDetails;
@@ -27,10 +27,10 @@ public class DatabaseClaimsSetGenerator extends JWTClaimsSetGenerator {
 
   @Override
   protected void populateSub(JWTClaimsSet.Builder builder, UserDetails userDetails) {
-    if (!(userDetails instanceof DatabaseAccountDetails)) {
+    if (!(userDetails instanceof UserDetailsDetails)) {
       throw new InternalServerErrorException("Could not cast UserDetails");
     }
 
-    builder.subject(((DatabaseAccountDetails) userDetails).getId().toString());
+    builder.subject(((UserDetailsDetails) userDetails).getId().toString());
   }
 }

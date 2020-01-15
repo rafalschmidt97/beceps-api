@@ -37,6 +37,11 @@
       <property name="minimum" value="2"/>
     </properties>
   </rule>
+  <rule ref="category/java/codestyle.xml/ShortClassName">
+    <properties>
+      <property name="minimum" value="3" />
+    </properties>
+  </rule>
   <rule ref="category/java/codestyle.xml/LongVariable">
     <properties>
       <property name="minimum" value="30"/>

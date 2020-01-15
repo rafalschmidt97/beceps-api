@@ -16,7 +16,6 @@ import io.micronaut.security.authentication.Authentication;
 import io.micronaut.security.authentication.UsernamePasswordCredentials;
 import io.micronaut.security.rules.SecurityRule;
 import io.micronaut.security.token.jwt.render.AccessRefreshToken;
-import io.micronaut.validation.Validated;
 import io.reactivex.Single;
 import java.security.Principal;
 import javax.validation.Valid;
@@ -24,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller("/auth")
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @RequiredArgsConstructor
-@Validated
 @Slf4j
 public class AuthController {
   private final AuthRefreshHandler refreshHandler;
@@ -47,7 +46,6 @@ public class AuthController {
   }
 
   @Post("/logout")
-  @Secured(SecurityRule.IS_AUTHENTICATED)
   public HttpResponse logout(@Valid @Body AuthLogoutRequest request, Authentication authentication) {
     return logoutHandler.handle(request, authentication);
   }

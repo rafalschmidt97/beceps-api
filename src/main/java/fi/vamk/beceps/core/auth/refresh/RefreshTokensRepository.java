@@ -12,6 +12,6 @@ public interface RefreshTokensRepository extends CrudRepository<RefreshToken, Lo
   void deleteByToken(String token);
 
   @Transactional
-  void deleteAllByAccountId(Long accountId);
+  void deleteAllByUserId(Long userId);
 }
 

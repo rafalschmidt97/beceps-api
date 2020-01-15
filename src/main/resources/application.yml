@@ -30,7 +30,7 @@ micronaut:
         signatures:
           secret:
             generator:
-              secret: becepstoolforvamkuniversity
+              secret: becepsgymtoolforvamkuniversitysecret
               jws-algorithm: HS256
 datasources:
   default:
