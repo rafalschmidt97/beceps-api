@@ -47,3 +47,7 @@ jpa:
         hbm2ddl:
           auto: validate
 #        show_sql: true
+jackson:
+  serialization:
+    failOnEmptyBeans: false
+    writeDatesAsTimestamps: true
