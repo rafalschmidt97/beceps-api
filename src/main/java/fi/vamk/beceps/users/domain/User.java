@@ -1,4 +1,4 @@
-package fi.vamk.beceps.users;
+package fi.vamk.beceps.users.domain;
 
 import java.util.Date;
 import javax.persistence.Column;

@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.fetcher;
 
-import fi.vamk.beceps.users.UsersRepository;
+import fi.vamk.beceps.users.domain.UsersRepository;
 import io.micronaut.security.authentication.providers.UserFetcher;
 import io.micronaut.security.authentication.providers.UserState;
 import io.reactivex.Flowable;

@@ -3,10 +3,12 @@ package fi.vamk.beceps.common.bus.command;
 import fi.vamk.beceps.common.bus.Registry;
 import fi.vamk.beceps.common.bus.query.Query;
 import fi.vamk.beceps.common.bus.query.QueryHandler;
+import javax.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 // The codebase is provided from asc-lab/micronaut-microservices-poc repository
+@Singleton
 @RequiredArgsConstructor
 @SuppressWarnings("unchecked")
 public class MicronautCommandBus implements CommandBus {

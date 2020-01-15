@@ -2,8 +2,8 @@ package fi.vamk.beceps.core.auth.handlers.signup;
 
 import fi.vamk.beceps.common.exceptions.ConflictException;
 import fi.vamk.beceps.core.auth.provider.UserDetailsDetails;
-import fi.vamk.beceps.users.User;
-import fi.vamk.beceps.users.UsersRepository;
+import fi.vamk.beceps.users.domain.User;
+import fi.vamk.beceps.users.domain.UsersRepository;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.security.authentication.UsernamePasswordCredentials;
 import io.micronaut.security.authentication.providers.PasswordEncoder;
@@ -26,7 +26,7 @@ public class AuthSignUpHandler {
     }
 
     val user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()));
-    usersRepository.save(user);
+    usersRepository.insert(user);
 
     val accessRefreshToken = accessRefreshTokenGenerator.generate(new UserDetailsDetails(user));
 

@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.refresh;
 
-import fi.vamk.beceps.users.User;
+import fi.vamk.beceps.users.domain.User;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;

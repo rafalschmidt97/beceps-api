@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.provider;
 
-import fi.vamk.beceps.users.User;
+import fi.vamk.beceps.users.domain.User;
 import io.micronaut.security.authentication.UserDetails;
 import java.util.Collection;
 import java.util.Collections;

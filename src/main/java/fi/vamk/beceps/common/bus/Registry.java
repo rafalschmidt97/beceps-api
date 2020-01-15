@@ -11,8 +11,10 @@ import io.micronaut.core.reflect.GenericTypeUtils;
 import io.micronaut.inject.BeanDefinition;
 import java.util.HashMap;
 import java.util.Map;
+import javax.inject.Singleton;
 import lombok.val;
 
+@Singleton
 @SuppressWarnings("unchecked")
 public class Registry {
 

@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.fetcher;
 
-import fi.vamk.beceps.users.User;
+import fi.vamk.beceps.users.domain.User;
 import io.micronaut.security.authentication.providers.UserState;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
