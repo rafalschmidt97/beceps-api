@@ -76,6 +76,7 @@ spotbugs {
 
 pmd {
   toolVersion "6.20.0"
+  incrementalAnalysis = false
   ruleSets = []
   ruleSetFiles files("${rootDir}/tools/lint/pmd.xml")
 }
