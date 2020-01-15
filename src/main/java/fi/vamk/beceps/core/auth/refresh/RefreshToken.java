@@ -26,10 +26,7 @@ public class RefreshToken {
   @Column(nullable = false)
   private Date issuedAt;
 
-  @Column(nullable = false)
-  private Date expiredAt;
-
-  @Column(nullable = false, length = 50)
+  @Column(nullable = false, length = 512)
   private String token;
 
   @Column(name = "account_id", nullable = false)
@@ -39,14 +36,9 @@ public class RefreshToken {
   @JoinColumn(name = "account_id", insertable = false, updatable = false)
   private Account account;
 
-  public RefreshToken(Date expiredAt, String token, Long accountId) {
+  public RefreshToken(String token, Long accountId) {
     this.issuedAt = new Date();
-    this.expiredAt = expiredAt;
     this.token = token;
     this.accountId = accountId;
-  }
-
-  public boolean isExpired() {
-    return expiredAt.before(new Date());
   }
 }

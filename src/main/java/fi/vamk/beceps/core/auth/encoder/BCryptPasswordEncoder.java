@@ -1,4 +1,4 @@
-package fi.vamk.beceps.core.auth.utils;
+package fi.vamk.beceps.core.auth.encoder;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import io.micronaut.security.authentication.providers.PasswordEncoder;

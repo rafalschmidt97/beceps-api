@@ -2,9 +2,12 @@ package fi.vamk.beceps.accounts;
 
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.CrudRepository;
+import java.util.Optional;
 
 @Repository
 public interface AccountsRepository extends CrudRepository<Account, Long> {
+  Optional<Account> findByEmail(String email);
+
   boolean existsByEmail(String email);
 }
 
