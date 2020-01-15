@@ -1,4 +1,4 @@
-package fi.vamk.beceps.accounts;
+package fi.vamk.beceps.users;
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account {
+public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -28,7 +28,7 @@ public class Account {
   @Column(nullable = false)
   private Date createdAt;
 
-  public Account(String email, String password) {
+  public User(String email, String password) {
     this.email = email;
     this.password = password;
     this.createdAt = new Date();
@@ -36,6 +36,6 @@ public class Account {
 
   @Override
   public String toString() {
-    return String.format("Account{id=%d, email=%s, createdAt=%s}", id, email, createdAt);
+    return String.format("User{id=%d, email=%s, createdAt=%s}", id, email, createdAt);
   }
 }
