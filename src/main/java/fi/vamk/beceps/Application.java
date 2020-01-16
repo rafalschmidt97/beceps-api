@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.info.Info;
     info = @Info(
         title = "Beceps",
         version = "1.0",
-        description = "Gym tool for scheduling workouts",
+        description = "Gym tool for scheduling workouts.",
         contact = @Contact(
             name = "Rafał Schmidt",
             url = "https://rafalschmidt.com",
