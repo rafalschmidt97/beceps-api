@@ -3,7 +3,6 @@ package fi.vamk.beceps.workouts.api;
 import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutCommand;
-import fi.vamk.beceps.workouts.api.events.commands.updateroutine.UpdateRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.updateworkout.UpdateWorkoutCommand;
 import fi.vamk.beceps.workouts.api.events.dto.WorkoutDto;
 import io.micronaut.http.annotation.Body;
@@ -37,10 +36,6 @@ public interface WorkoutOperations {
   @Post("/routines")
   @Operation(summary = "Add new routine.")
   void addRoutine(@Valid @Body AddRoutineCommand request);
-
-  @Put("/routines/{routineId}")
-  @Operation(summary = "Update existing routine.")
-  void updateRoutine(Long routineId, @Valid @Body UpdateRoutineCommand request);
 
   @Delete("/routines/{routineId}")
   @Operation(summary = "Remove existing routine.")
