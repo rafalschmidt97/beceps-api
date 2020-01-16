@@ -6,7 +6,7 @@ import io.micronaut.data.repository.GenericRepository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface RefreshTokensRepository extends GenericRepository<RefreshToken, Long> {
+public interface RefreshTokenRepository extends GenericRepository<RefreshToken, Long> {
   boolean existsByToken(String token);
 
   @Transactional

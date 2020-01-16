@@ -3,7 +3,7 @@ package fi.vamk.beceps.core.auth.handlers.commands.refresh;
 import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.common.exceptions.UnauthorizedException;
 import fi.vamk.beceps.core.auth.api.events.commands.refresh.RefreshCommand;
-import fi.vamk.beceps.core.auth.infrastructure.persistence.RefreshTokensRepository;
+import fi.vamk.beceps.core.auth.infrastructure.persistence.RefreshTokenRepository;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.security.authentication.Authentication;
@@ -21,14 +21,14 @@ import lombok.val;
 @RequiredArgsConstructor
 public class RefreshCommandHandler implements CommandHandler<Single<HttpResponse<AccessRefreshToken>>, RefreshCommand> {
   private final TokenValidator tokenValidator;
-  private final RefreshTokensRepository refreshTokensRepository;
+  private final RefreshTokenRepository refreshTokenRepository;
   private final AccessRefreshTokenGenerator accessRefreshTokenGenerator;
 
   @Override
   public Single<HttpResponse<AccessRefreshToken>> handle(RefreshCommand command) {
     return Flowable.fromPublisher(tokenValidator.validateToken(command.getRefreshToken()))
       .map((Function<Authentication, HttpResponse<AccessRefreshToken>>) authentication -> {
-        if (!refreshTokensRepository.existsByToken(command.getRefreshToken())) {
+        if (!refreshTokenRepository.existsByToken(command.getRefreshToken())) {
           throw new UnauthorizedException();
         }
 

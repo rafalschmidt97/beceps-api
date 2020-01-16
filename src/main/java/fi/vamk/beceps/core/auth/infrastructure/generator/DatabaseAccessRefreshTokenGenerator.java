@@ -2,7 +2,7 @@ package fi.vamk.beceps.core.auth.infrastructure.generator;
 
 import fi.vamk.beceps.common.exceptions.InternalServerErrorException;
 import fi.vamk.beceps.core.auth.domain.RefreshToken;
-import fi.vamk.beceps.core.auth.infrastructure.persistence.RefreshTokensRepository;
+import fi.vamk.beceps.core.auth.infrastructure.persistence.RefreshTokenRepository;
 import fi.vamk.beceps.core.auth.infrastructure.provider.DatabaseUserDetails;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.context.event.ApplicationEventPublisher;
@@ -20,7 +20,7 @@ import lombok.val;
 @Singleton
 @Replaces(bean = AccessRefreshTokenGenerator.class)
 public class DatabaseAccessRefreshTokenGenerator extends AccessRefreshTokenGenerator {
-  private final RefreshTokensRepository refreshTokensRepository;
+  private final RefreshTokenRepository refreshTokenRepository;
 
   public DatabaseAccessRefreshTokenGenerator(
       JwtGeneratorConfiguration jwtGeneratorConfiguration,
@@ -28,10 +28,10 @@ public class DatabaseAccessRefreshTokenGenerator extends AccessRefreshTokenGener
       TokenGenerator tokenGenerator,
       ClaimsGenerator claimsGenerator,
       ApplicationEventPublisher eventPublisher,
-      RefreshTokensRepository refreshTokensRepository
+      RefreshTokenRepository refreshTokenRepository
   ) {
     super(jwtGeneratorConfiguration, tokenRenderer, tokenGenerator, claimsGenerator, eventPublisher);
-    this.refreshTokensRepository = refreshTokensRepository;
+    this.refreshTokenRepository = refreshTokenRepository;
   }
 
   // Default implementation does not add generated refresh token to the database
@@ -48,7 +48,7 @@ public class DatabaseAccessRefreshTokenGenerator extends AccessRefreshTokenGener
           accessRefreshToken.get().getRefreshToken(),
           ((DatabaseUserDetails) userDetails).getId()
       );
-      refreshTokensRepository.insert(refreshToken);
+      refreshTokenRepository.insert(refreshToken);
     }
 
     return accessRefreshToken;

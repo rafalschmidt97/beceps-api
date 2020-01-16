@@ -6,7 +6,7 @@ import io.micronaut.data.repository.GenericRepository;
 import java.util.Optional;
 
 @Repository
-public interface UsersRepository extends GenericRepository<User, Long> {
+public interface UserRepository extends GenericRepository<User, Long> {
   Optional<User> findById(Long id);
 
   Optional<User> findByEmail(String email);

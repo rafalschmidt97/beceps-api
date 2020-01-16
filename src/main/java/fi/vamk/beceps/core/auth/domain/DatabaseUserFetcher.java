@@ -1,6 +1,6 @@
 package fi.vamk.beceps.core.auth.domain;
 
-import fi.vamk.beceps.users.infrastructure.persistence.UsersRepository;
+import fi.vamk.beceps.users.infrastructure.persistence.UserRepository;
 import io.micronaut.security.authentication.providers.UserFetcher;
 import io.micronaut.security.authentication.providers.UserState;
 import io.reactivex.Flowable;
@@ -12,11 +12,11 @@ import org.reactivestreams.Publisher;
 @Singleton
 @RequiredArgsConstructor
 public class DatabaseUserFetcher implements UserFetcher {
-  private final UsersRepository usersRepository;
+  private final UserRepository userRepository;
 
   @Override
   public Publisher<UserState> findByUsername(String username) {
-    val user = usersRepository.findByEmail(username);
+    val user = userRepository.findByEmail(username);
 
     if (!user.isPresent()) {
       return Flowable.empty();
