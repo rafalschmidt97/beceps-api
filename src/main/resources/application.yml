@@ -51,3 +51,7 @@ jackson:
   serialization:
     failOnEmptyBeans: false
     writeDatesAsTimestamps: true
+endpoints:
+  health:
+    enabled: true
+    sensitive: false
