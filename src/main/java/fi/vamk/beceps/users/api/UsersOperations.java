@@ -1,9 +1,9 @@
 package fi.vamk.beceps.users.api;
 
-import fi.vamk.beceps.users.api.events.getuser.GetUserQueryResult;
+import fi.vamk.beceps.users.api.events.dto.UserDto;
 import io.micronaut.http.annotation.Get;
 
 public interface UsersOperations {
   @Get("/{userId}")
-  GetUserQueryResult get(Long userId);
+  UserDto get(Long userId);
 }
