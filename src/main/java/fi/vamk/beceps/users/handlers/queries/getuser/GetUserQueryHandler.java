@@ -1,4 +1,4 @@
-package fi.vamk.beceps.users.handlers.queries;
+package fi.vamk.beceps.users.handlers.queries.getuser;
 
 import fi.vamk.beceps.common.bus.query.QueryHandler;
 import fi.vamk.beceps.common.exceptions.NotFoundException;

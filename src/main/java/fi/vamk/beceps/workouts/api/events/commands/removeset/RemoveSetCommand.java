@@ -6,5 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RemoveSetCommand implements Command {
+public class RemoveSetCommand implements Command<Void> {
+  private Long setId;
+  private Long userId;
 }

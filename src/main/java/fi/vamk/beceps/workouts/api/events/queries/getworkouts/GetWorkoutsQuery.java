@@ -9,4 +9,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class GetWorkoutsQuery implements Query<List<WorkoutDto>> {
+  private Long userId;
 }

@@ -9,20 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "`set`")
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Set {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false, length = 60)
+  @Column(nullable = false, length = 30)
   private String name;
 
   @Column(nullable = false)
@@ -44,10 +47,11 @@ public class Set {
   @JoinColumn(name = "routine_id", insertable = false, updatable = false)
   private Routine routine;
 
-  public Set(String name, int setsAmount, int repsAmount) {
+  public Set(String name, int setsAmount, int repsAmount, Long routineId) {
     this.name = name;
     this.setsAmount = setsAmount;
     this.repsAmount = repsAmount;
+    this.routineId = routineId;
     this.createdAt = new Date();
   }
 

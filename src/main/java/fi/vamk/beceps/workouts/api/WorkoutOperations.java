@@ -12,6 +12,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.security.Principal;
 import java.util.List;
 import javax.validation.Valid;
 
@@ -19,33 +20,33 @@ import javax.validation.Valid;
 public interface WorkoutOperations {
   @Get("/workouts")
   @Operation(summary = "Get own workouts.")
-  List<WorkoutDto> getWorkouts();
+  List<WorkoutDto> getWorkouts(Principal principal);
 
   @Post("/workouts")
   @Operation(summary = "Add new workout.")
-  void addWorkout(@Valid @Body AddWorkoutCommand request);
+  void addWorkout(@Valid @Body AddWorkoutCommand request, Principal principal);
 
   @Put("/workouts/{workoutId}")
   @Operation(summary = "Update existing workout.")
-  void updateWorkout(Long workoutId, @Valid @Body UpdateWorkoutCommand request);
+  void updateWorkout(Long workoutId, @Valid @Body UpdateWorkoutCommand request, Principal principal);
 
   @Delete("/workouts/{workoutId}")
   @Operation(summary = "Remove existing workout.")
-  void removeWorkout(Long workoutId);
+  void removeWorkout(Long workoutId, Principal principal);
 
   @Post("/routines")
   @Operation(summary = "Add new routine.")
-  void addRoutine(@Valid @Body AddRoutineCommand request);
+  void addRoutine(@Valid @Body AddRoutineCommand request, Principal principal);
 
   @Delete("/routines/{routineId}")
   @Operation(summary = "Remove existing routine.")
-  void removeRoutine(Long routineId);
+  void removeRoutine(Long routineId, Principal principal);
 
   @Post("/sets")
   @Operation(summary = "Add new set.")
-  void addSet(@Valid @Body AddSetCommand request);
+  void addSet(@Valid @Body AddSetCommand request, Principal principal);
 
   @Delete("/sets/{setId}")
   @Operation(summary = "Remove existing set.")
-  void removeSet(Long setId);
+  void removeSet(Long setId, Principal principal);
 }

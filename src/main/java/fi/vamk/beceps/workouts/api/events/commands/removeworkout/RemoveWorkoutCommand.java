@@ -6,5 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RemoveWorkoutCommand implements Command {
+public class RemoveWorkoutCommand implements Command<Void> {
+  private Long workoutId;
+  private Long userId;
 }

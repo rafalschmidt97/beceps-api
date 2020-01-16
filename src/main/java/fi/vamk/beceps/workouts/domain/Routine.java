@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Routine {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +41,9 @@ public class Routine {
   @OneToMany(mappedBy = "routine", fetch = FetchType.LAZY)
   private List<Set> sets;
 
-  public Routine(int weekDay) {
+  public Routine(int weekDay, Long workoutId) {
     this.weekDay = weekDay;
+    this.workoutId = workoutId;
     this.createdAt = new Date();
   }
 }
