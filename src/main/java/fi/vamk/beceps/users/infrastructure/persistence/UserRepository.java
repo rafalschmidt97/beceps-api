@@ -13,6 +13,8 @@ public interface UserRepository extends GenericRepository<User, Long> {
 
   boolean existsByEmail(String email);
 
+  boolean existsById(Long userId);
+
   User insert(User user);
 }
 
