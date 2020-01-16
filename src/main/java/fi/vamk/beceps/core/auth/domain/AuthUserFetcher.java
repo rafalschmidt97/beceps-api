@@ -11,7 +11,7 @@ import org.reactivestreams.Publisher;
 
 @Singleton
 @RequiredArgsConstructor
-public class DatabaseUserFetcher implements UserFetcher {
+public class AuthUserFetcher implements UserFetcher {
   private final UserRepository userRepository;
 
   @Override
@@ -22,7 +22,7 @@ public class DatabaseUserFetcher implements UserFetcher {
       return Flowable.empty();
     }
 
-    val userState = new DatabaseUserState(user.get());
+    val userState = new AuthUserState(user.get());
     return Flowable.just(userState);
   }
 }

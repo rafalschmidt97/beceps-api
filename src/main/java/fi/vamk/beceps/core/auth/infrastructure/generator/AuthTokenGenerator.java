@@ -3,7 +3,7 @@ package fi.vamk.beceps.core.auth.infrastructure.generator;
 import fi.vamk.beceps.common.exceptions.InternalServerErrorException;
 import fi.vamk.beceps.core.auth.domain.RefreshToken;
 import fi.vamk.beceps.core.auth.infrastructure.persistence.RefreshTokenRepository;
-import fi.vamk.beceps.core.auth.infrastructure.provider.DatabaseUserDetails;
+import fi.vamk.beceps.core.auth.infrastructure.provider.AuthUserDetails;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.security.authentication.UserDetails;
@@ -19,10 +19,10 @@ import lombok.val;
 
 @Singleton
 @Replaces(bean = AccessRefreshTokenGenerator.class)
-public class DatabaseAccessRefreshTokenGenerator extends AccessRefreshTokenGenerator {
+public class AuthTokenGenerator extends AccessRefreshTokenGenerator {
   private final RefreshTokenRepository refreshTokenRepository;
 
-  public DatabaseAccessRefreshTokenGenerator(
+  public AuthTokenGenerator(
       JwtGeneratorConfiguration jwtGeneratorConfiguration,
       TokenRenderer tokenRenderer,
       TokenGenerator tokenGenerator,
@@ -37,7 +37,7 @@ public class DatabaseAccessRefreshTokenGenerator extends AccessRefreshTokenGener
   // Default implementation does not add generated refresh token to the database
   @Override
   public Optional<AccessRefreshToken> generate(UserDetails userDetails) {
-    if (!(userDetails instanceof DatabaseUserDetails)) {
+    if (!(userDetails instanceof AuthUserDetails)) {
       throw new InternalServerErrorException("Could not cast UserDetails");
     }
 
@@ -46,7 +46,7 @@ public class DatabaseAccessRefreshTokenGenerator extends AccessRefreshTokenGener
     if (accessRefreshToken.isPresent()) {
       val refreshToken = new RefreshToken(
           accessRefreshToken.get().getRefreshToken(),
-          ((DatabaseUserDetails) userDetails).getId()
+          ((AuthUserDetails) userDetails).getId()
       );
       refreshTokenRepository.insert(refreshToken);
     }

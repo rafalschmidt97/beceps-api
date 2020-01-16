@@ -1,8 +1,8 @@
 package fi.vamk.beceps.core.auth.infrastructure.provider;
 
-import fi.vamk.beceps.core.auth.domain.DatabaseAuthoritiesFetcher;
-import fi.vamk.beceps.core.auth.domain.DatabaseUserFetcher;
-import fi.vamk.beceps.core.auth.domain.DatabaseUserState;
+import fi.vamk.beceps.core.auth.domain.AuthRolesFetcher;
+import fi.vamk.beceps.core.auth.domain.AuthUserFetcher;
+import fi.vamk.beceps.core.auth.domain.AuthUserState;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.security.authentication.AuthenticationFailed;
 import io.micronaut.security.authentication.AuthenticationFailureReason;
@@ -21,9 +21,9 @@ import org.reactivestreams.Publisher;
 @Singleton
 @RequiredArgsConstructor
 @Replaces(bean = DelegatingAuthenticationProvider.class)
-public class DatabaseAuthenticationProvider implements AuthenticationProvider {
-  private final DatabaseUserFetcher userFetcher;
-  private final DatabaseAuthoritiesFetcher authoritiesFetcher;
+public class AuthProvider implements AuthenticationProvider {
+  private final AuthUserFetcher userFetcher;
+  private final AuthRolesFetcher authoritiesFetcher;
   private final PasswordEncoder passwordEncoder;
 
   @Override
@@ -49,22 +49,22 @@ public class DatabaseAuthenticationProvider implements AuthenticationProvider {
     }).switchIfEmpty(Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.USER_NOT_FOUND)));
   }
 
-  protected Publisher<DatabaseUserState> fetchUserState(AuthenticationRequest authenticationRequest) {
+  protected Publisher<AuthUserState> fetchUserState(AuthenticationRequest authenticationRequest) {
     val username = authenticationRequest.getIdentity().toString();
     return Flowable.fromPublisher(userFetcher.findByUsername(username))
-        .switchMap(userState -> Flowable.just((DatabaseUserState) userState));
+        .switchMap(userState -> Flowable.just((AuthUserState) userState));
   }
 
-  protected Publisher<AuthenticationResponse> createSuccessfulAuthenticationResponse(DatabaseUserState user) {
+  protected Publisher<AuthenticationResponse> createSuccessfulAuthenticationResponse(AuthUserState user) {
     return Flowable
-      .fromPublisher(authoritiesFetcher.findAuthoritiesById(user.getId()))
+      .fromPublisher(authoritiesFetcher.findRolesByUserId(user.getId()))
       .map(authorities -> createSuccessfulAuthenticationResponse(user, authorities));
   }
 
   protected AuthenticationResponse createSuccessfulAuthenticationResponse(
-      DatabaseUserState user,
+      AuthUserState user,
       List<String> authorities
   ) {
-    return new DatabaseUserDetails(user.getUsername(), authorities, user.getId());
+    return new AuthUserDetails(user.getUsername(), authorities, user.getId());
   }
 }

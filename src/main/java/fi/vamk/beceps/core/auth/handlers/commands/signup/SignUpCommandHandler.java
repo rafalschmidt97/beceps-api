@@ -3,12 +3,12 @@ package fi.vamk.beceps.core.auth.handlers.commands.signup;
 import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.common.exceptions.ConflictException;
 import fi.vamk.beceps.core.auth.api.events.commands.signup.SignUpCommand;
-import fi.vamk.beceps.core.auth.infrastructure.provider.DatabaseUserDetails;
+import fi.vamk.beceps.core.auth.infrastructure.generator.AuthTokenGenerator;
+import fi.vamk.beceps.core.auth.infrastructure.provider.AuthUserDetails;
 import fi.vamk.beceps.users.domain.User;
 import fi.vamk.beceps.users.infrastructure.persistence.UserRepository;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.security.authentication.providers.PasswordEncoder;
-import io.micronaut.security.token.jwt.generator.AccessRefreshTokenGenerator;
 import io.micronaut.security.token.jwt.render.AccessRefreshToken;
 import javax.inject.Singleton;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import lombok.val;
 public class SignUpCommandHandler implements CommandHandler<HttpResponse<AccessRefreshToken>, SignUpCommand> {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-  private final AccessRefreshTokenGenerator accessRefreshTokenGenerator;
+  private final AuthTokenGenerator authTokenGenerator;
 
   @Override
   public HttpResponse<AccessRefreshToken> handle(SignUpCommand command) {
@@ -30,7 +30,7 @@ public class SignUpCommandHandler implements CommandHandler<HttpResponse<AccessR
     val user = new User(command.getEmail(), passwordEncoder.encode(command.getPassword()));
     userRepository.insert(user);
 
-    val accessRefreshToken = accessRefreshTokenGenerator.generate(new DatabaseUserDetails(user));
+    val accessRefreshToken = authTokenGenerator.generate(new AuthUserDetails(user));
 
     if (accessRefreshToken.isPresent()) {
       return HttpResponse.ok(accessRefreshToken.get());

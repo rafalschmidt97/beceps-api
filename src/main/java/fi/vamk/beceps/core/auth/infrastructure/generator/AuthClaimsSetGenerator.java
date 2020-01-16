@@ -2,7 +2,7 @@ package fi.vamk.beceps.core.auth.infrastructure.generator;
 
 import com.nimbusds.jwt.JWTClaimsSet;
 import fi.vamk.beceps.common.exceptions.InternalServerErrorException;
-import fi.vamk.beceps.core.auth.infrastructure.provider.DatabaseUserDetails;
+import fi.vamk.beceps.core.auth.infrastructure.provider.AuthUserDetails;
 import io.micronaut.context.annotation.Replaces;
 import io.micronaut.runtime.ApplicationConfiguration;
 import io.micronaut.security.authentication.UserDetails;
@@ -15,8 +15,8 @@ import javax.inject.Singleton;
 
 @Singleton
 @Replaces(bean = JWTClaimsSetGenerator.class)
-public class DatabaseClaimsSetGenerator extends JWTClaimsSetGenerator {
-  public DatabaseClaimsSetGenerator(
+public class AuthClaimsSetGenerator extends JWTClaimsSetGenerator {
+  public AuthClaimsSetGenerator(
       TokenConfiguration tokenConfiguration,
       @Nullable JwtIdGenerator jwtIdGenerator,
       @Nullable ClaimsAudienceProvider claimsAudienceProvider,
@@ -27,10 +27,10 @@ public class DatabaseClaimsSetGenerator extends JWTClaimsSetGenerator {
 
   @Override
   protected void populateSub(JWTClaimsSet.Builder builder, UserDetails userDetails) {
-    if (!(userDetails instanceof DatabaseUserDetails)) {
+    if (!(userDetails instanceof AuthUserDetails)) {
       throw new InternalServerErrorException("Could not cast UserDetails");
     }
 
-    builder.subject(((DatabaseUserDetails) userDetails).getId().toString());
+    builder.subject(((AuthUserDetails) userDetails).getId().toString());
   }
 }

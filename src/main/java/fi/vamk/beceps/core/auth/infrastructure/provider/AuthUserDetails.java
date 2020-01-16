@@ -12,17 +12,17 @@ import lombok.Setter;
 import lombok.val;
 
 @EqualsAndHashCode(callSuper = true)
-public class DatabaseUserDetails extends UserDetails {
+public class AuthUserDetails extends UserDetails {
   @Getter
   @Setter
   private Long id;
 
-  public DatabaseUserDetails(String username, Collection<String> roles, Long id) {
+  public AuthUserDetails(String username, Collection<String> roles, Long id) {
     super(username, roles);
     this.id = id;
   }
 
-  public DatabaseUserDetails(User user) {
+  public AuthUserDetails(User user) {
     this(user.getEmail(), Collections.emptyList(), user.getId());
   }
 

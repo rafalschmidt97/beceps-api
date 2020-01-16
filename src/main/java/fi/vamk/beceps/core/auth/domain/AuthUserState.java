@@ -8,13 +8,13 @@ import lombok.ToString;
 
 @EqualsAndHashCode
 @ToString
-public class DatabaseUserState implements UserState {
+public class AuthUserState implements UserState {
   @Getter
   private final Long id;
   private final String email;
   private final String password;
 
-  public DatabaseUserState(User user) {
+  public AuthUserState(User user) {
     this.id = user.getId();
     this.email = user.getEmail();
     this.password = user.getPassword();

@@ -7,9 +7,9 @@ import javax.inject.Singleton;
 import org.reactivestreams.Publisher;
 
 @Singleton
-public class DatabaseAuthoritiesFetcher {
+public class AuthRolesFetcher {
   // Instead of searching by username as in AuthoritiesFetcher it uses id
-  public Publisher<List<String>> findAuthoritiesById(Long id) {
+  public Publisher<List<String>> findRolesByUserId(Long userId) {
     return Flowable.just(Collections.emptyList());
   }
 }

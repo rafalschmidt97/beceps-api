@@ -2,6 +2,7 @@ package fi.vamk.beceps.core.auth.handlers.commands.login;
 
 import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.core.auth.api.events.commands.login.LoginCommand;
+import fi.vamk.beceps.core.auth.infrastructure.generator.AuthTokenGenerator;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
@@ -12,7 +13,6 @@ import io.micronaut.security.authentication.Authenticator;
 import io.micronaut.security.authentication.UserDetails;
 import io.micronaut.security.event.LoginFailedEvent;
 import io.micronaut.security.event.LoginSuccessfulEvent;
-import io.micronaut.security.token.jwt.generator.AccessRefreshTokenGenerator;
 import io.micronaut.security.token.jwt.render.AccessRefreshToken;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -25,7 +25,7 @@ import lombok.val;
 @RequiredArgsConstructor
 public class LoginCommandHandler implements CommandHandler<Single<HttpResponse<AccessRefreshToken>>, LoginCommand> {
   private final Authenticator authenticator;
-  private final AccessRefreshTokenGenerator accessRefreshTokenGenerator;
+  private final AuthTokenGenerator authTokenGenerator;
   private final ApplicationEventPublisher eventPublisher;
 
   @Override
@@ -36,7 +36,7 @@ public class LoginCommandHandler implements CommandHandler<Single<HttpResponse<A
           val userDetails = (UserDetails) authenticationResponse;
           eventPublisher.publishEvent(new LoginSuccessfulEvent(userDetails));
 
-          val accessRefreshTokenOptional = accessRefreshTokenGenerator.generate(userDetails);
+          val accessRefreshTokenOptional = authTokenGenerator.generate(userDetails);
           if (accessRefreshTokenOptional.isPresent()) {
             return HttpResponse.ok(accessRefreshTokenOptional.get());
           }

@@ -9,7 +9,7 @@ import lombok.val;
 
 @Singleton
 @Replaces(bean = DefaultSecurityService.class)
-public class IdentifierSecurityService extends DefaultSecurityService {
+public class AuthService extends DefaultSecurityService {
   public Optional<Long> identifier() {
     val subject = getAuthentication().map(Principal::getName);
     return subject.isPresent() ? subject.map(Long::parseLong) : Optional.empty();
