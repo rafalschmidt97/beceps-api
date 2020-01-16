@@ -4,6 +4,8 @@ create table user
     email      varchar(50) not null unique,
     password   varchar(60) not null,
     created_at datetime(6) not null default current_timestamp(6),
+    is_locked  bit(1)      not null default 0,
+    locked_at  datetime(6),
     primary key (id)
 ) engine = INNODB;
 

@@ -30,21 +30,13 @@ public class AuthProvider implements AuthenticationProvider {
   public Publisher<AuthenticationResponse> authenticate(AuthenticationRequest authenticationRequest) {
 
     return Flowable.fromPublisher(fetchUserState(authenticationRequest)).switchMap(user -> {
-      if (!user.isEnabled()) {
-        return Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.USER_DISABLED));
-      }
-      if (user.isAccountExpired()) {
-        return Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.ACCOUNT_EXPIRED));
-      }
       if (user.isAccountLocked()) {
         return Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.ACCOUNT_LOCKED));
-      }
-      if (user.isPasswordExpired()) {
-        return Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.PASSWORD_EXPIRED));
       }
       if (!passwordEncoder.matches(authenticationRequest.getSecret().toString(), user.getPassword())) {
         return Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.CREDENTIALS_DO_NOT_MATCH));
       }
+
       return createSuccessfulAuthenticationResponse(user);
     }).switchIfEmpty(Flowable.just(new AuthenticationFailed(AuthenticationFailureReason.USER_NOT_FOUND)));
   }

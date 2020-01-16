@@ -1,5 +1,6 @@
 package fi.vamk.beceps.users.domain;
 
+import fi.vamk.beceps.common.exceptions.ConflictException;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,12 @@ public class User {
   @Column(nullable = false)
   private Date createdAt;
 
+  @Column(nullable = false)
+  private boolean isLocked;
+
+  @Column
+  private Date lockedAt;
+
   public User(String email, String password) {
     this.email = email;
     this.password = password;
@@ -37,5 +44,14 @@ public class User {
   @Override
   public String toString() {
     return String.format("User{id=%d, email=%s, createdAt=%s}", id, email, createdAt);
+  }
+
+  void lock() {
+    if (isLocked) {
+      throw new ConflictException(String.format("%s(%s) is already removed.", getClass().getSimpleName(), id));
+    }
+
+    isLocked = true;
+    lockedAt = new Date();
   }
 }

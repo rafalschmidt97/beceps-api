@@ -13,11 +13,13 @@ public class AuthUserState implements UserState {
   private final Long id;
   private final String email;
   private final String password;
+  private final boolean isLocked;
 
   public AuthUserState(User user) {
     this.id = user.getId();
     this.email = user.getEmail();
     this.password = user.getPassword();
+    this.isLocked = user.isLocked();
   }
 
   @Override
@@ -42,7 +44,7 @@ public class AuthUserState implements UserState {
 
   @Override
   public boolean isAccountLocked() {
-    return false;
+    return isLocked;
   }
 
   @Override

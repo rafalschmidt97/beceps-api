@@ -1,12 +1,12 @@
 package fi.vamk.beceps.core.auth.handlers.commands.login;
 
 import fi.vamk.beceps.common.bus.command.CommandHandler;
+import fi.vamk.beceps.common.exceptions.UnauthorizedException;
 import fi.vamk.beceps.core.auth.api.events.commands.login.LoginCommand;
 import fi.vamk.beceps.core.auth.infrastructure.generator.AuthTokenGenerator;
 import io.micronaut.context.event.ApplicationEventPublisher;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
-import io.micronaut.security.authentication.AuthenticationException;
 import io.micronaut.security.authentication.AuthenticationFailed;
 import io.micronaut.security.authentication.AuthenticationResponse;
 import io.micronaut.security.authentication.Authenticator;
@@ -45,7 +45,7 @@ public class LoginCommandHandler implements CommandHandler<Single<HttpResponse<A
           val authenticationFailed = (AuthenticationFailed) authenticationResponse;
           eventPublisher.publishEvent(new LoginFailedEvent(authenticationFailed));
 
-          throw new AuthenticationException(authenticationFailed.getMessage().orElse(null));
+          throw new UnauthorizedException(authenticationFailed.getMessage().orElse(null));
         }
       }).first(HttpResponse.status(HttpStatus.UNAUTHORIZED));
   }
