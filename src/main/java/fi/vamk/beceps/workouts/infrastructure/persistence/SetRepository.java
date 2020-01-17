@@ -13,5 +13,7 @@ public interface SetRepository extends GenericRepository<Set, Long> {
 
   Set insert(Set set);
 
+  Set save(Set set);
+
   void delete(Set set);
 }

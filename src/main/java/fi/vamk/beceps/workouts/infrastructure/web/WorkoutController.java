@@ -8,6 +8,8 @@ import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeroutine.RemoveRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeset.RemoveSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeworkout.RemoveWorkoutCommand;
+import fi.vamk.beceps.workouts.api.events.commands.updateroutine.UpdateRoutineCommand;
+import fi.vamk.beceps.workouts.api.events.commands.updateset.UpdateSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.updateworkout.UpdateWorkoutCommand;
 import fi.vamk.beceps.workouts.api.events.dto.WorkoutDto;
 import fi.vamk.beceps.workouts.api.events.queries.getworkouts.GetWorkoutsQuery;
@@ -48,6 +50,13 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
+  public void updateRoutine(Long routineId, UpdateRoutineCommand request, Principal principal) {
+    request.setUserId(getId(principal));
+    request.setRoutineId(routineId);
+    bus.executeCommand(request);
+  }
+
+  @Override
   public void removeRoutine(Long routineId, Principal principal) {
     bus.executeCommand(new RemoveRoutineCommand(routineId, getId(principal)));
   }
@@ -55,6 +64,13 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   @Override
   public void addSet(@Valid AddSetCommand request, Principal principal) {
     request.setUserId(getId(principal));
+    bus.executeCommand(request);
+  }
+
+  @Override
+  public void updateSet(Long setId, UpdateSetCommand request, Principal principal) {
+    request.setUserId(getId(principal));
+    request.setSetId(setId);
     bus.executeCommand(request);
   }
 

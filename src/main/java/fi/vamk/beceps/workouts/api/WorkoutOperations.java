@@ -3,6 +3,8 @@ package fi.vamk.beceps.workouts.api;
 import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutCommand;
+import fi.vamk.beceps.workouts.api.events.commands.updateroutine.UpdateRoutineCommand;
+import fi.vamk.beceps.workouts.api.events.commands.updateset.UpdateSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.updateworkout.UpdateWorkoutCommand;
 import fi.vamk.beceps.workouts.api.events.dto.WorkoutDto;
 import io.micronaut.http.annotation.Body;
@@ -38,6 +40,10 @@ public interface WorkoutOperations {
   @Operation(summary = "Add new routine.")
   void addRoutine(@Valid @Body AddRoutineCommand request, Principal principal);
 
+  @Put("/routines/{routineId}")
+  @Operation(summary = "Update existing routine.")
+  void updateRoutine(Long routineId, @Valid @Body UpdateRoutineCommand request, Principal principal);
+
   @Delete("/routines/{routineId}")
   @Operation(summary = "Remove existing routine.")
   void removeRoutine(Long routineId, Principal principal);
@@ -45,6 +51,10 @@ public interface WorkoutOperations {
   @Post("/sets")
   @Operation(summary = "Add new set.")
   void addSet(@Valid @Body AddSetCommand request, Principal principal);
+
+  @Put("/sets/{setId}")
+  @Operation(summary = "Update existing routine.")
+  void updateSet(Long setId, @Valid @Body UpdateSetCommand request, Principal principal);
 
   @Delete("/sets/{setId}")
   @Operation(summary = "Remove existing set.")

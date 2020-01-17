@@ -13,6 +13,8 @@ public interface RoutineRepository extends GenericRepository<Routine, Long> {
 
   boolean existsById(Long id);
 
+  Routine save(Routine routine);
+
   Routine insert(Routine routine);
 
   void delete(Routine routine);

@@ -21,7 +21,7 @@ public class UpdateWorkoutCommandHandler implements CommandHandler<Void, UpdateW
   public Void handle(UpdateWorkoutCommand command) {
     val workout = workoutRepository
         .findById(command.getWorkoutId())
-        .orElseThrow(() -> new NotFoundException(Workout.class, command.getUserId()));
+        .orElseThrow(() -> new NotFoundException(Workout.class, command.getWorkoutId()));
 
     if (!workout.getUserId().equals(command.getUserId())) {
       throw new ForbiddenException();
