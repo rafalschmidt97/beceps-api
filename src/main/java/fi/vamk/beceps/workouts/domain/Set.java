@@ -48,7 +48,7 @@ public class Set {
   private Routine routine;
 
   public Set(String name, int setsAmount, int repsAmount, Long routineId) {
-    this.name = name;
+    this.name = name.trim();
     this.setsAmount = setsAmount;
     this.repsAmount = repsAmount;
     this.routineId = routineId;
@@ -56,7 +56,7 @@ public class Set {
   }
 
   public void update(String name, int setsAmount, int repsAmount) {
-    this.name = name;
+    this.name = name.trim();
     this.setsAmount = setsAmount;
     this.repsAmount = repsAmount;
     this.modifiedAt = new Date();

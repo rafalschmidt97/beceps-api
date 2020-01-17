@@ -53,6 +53,7 @@
     <exclude name="AssignmentInOperand"/>
     <exclude name="BeanMembersShouldSerialize"/>
     <exclude name="UseLocaleWithCaseConversions"/>
+    <exclude name="DataflowAnomalyAnalysis"/>
   </rule>
   <rule ref="category/java/multithreading.xml">
     <exclude name="AvoidUsingVolatile"/>

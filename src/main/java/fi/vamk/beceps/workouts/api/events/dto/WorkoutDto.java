@@ -12,7 +12,6 @@ import lombok.Data;
 public class WorkoutDto {
   private Long id;
   private String name;
-  private Long userId;
 
   @JsonInclude
   private List<RoutineDto> routines;
@@ -20,7 +19,6 @@ public class WorkoutDto {
   public WorkoutDto(Workout workout) {
     this.id = workout.getId();
     this.name = workout.getName();
-    this.userId = workout.getUserId();
     this.routines = workout.getRoutines()
       .stream()
       .map(RoutineDto::new)

@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface RoutineRepository extends GenericRepository<Routine, Long> {
   Optional<Routine> findById(Long id);
 
+  Optional<Routine> findByWorkoutIdAndWeekDay(Long workoutId, int weekDay);
+
   boolean existsById(Long id);
 
   Routine insert(Routine routine);
