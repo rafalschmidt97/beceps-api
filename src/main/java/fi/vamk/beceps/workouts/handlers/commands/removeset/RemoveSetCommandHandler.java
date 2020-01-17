@@ -1,4 +1,4 @@
-package fi.vamk.beceps.workouts.commands.removeset;
+package fi.vamk.beceps.workouts.handlers.commands.removeset;
 
 import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.common.exceptions.ForbiddenException;

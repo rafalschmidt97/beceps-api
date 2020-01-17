@@ -1,4 +1,4 @@
-package fi.vamk.beceps.workouts.queries.getworkouts;
+package fi.vamk.beceps.workouts.handlers.queries.getworkouts;
 
 import fi.vamk.beceps.common.bus.query.QueryHandler;
 import fi.vamk.beceps.workouts.api.events.dto.WorkoutDto;

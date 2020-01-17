@@ -1,13 +1,11 @@
-package fi.vamk.beceps.workouts.commands.addset;
+package fi.vamk.beceps.workouts.handlers.commands.removeroutine;
 
 import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.common.exceptions.ForbiddenException;
 import fi.vamk.beceps.common.exceptions.NotFoundException;
-import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetCommand;
+import fi.vamk.beceps.workouts.api.events.commands.removeroutine.RemoveRoutineCommand;
 import fi.vamk.beceps.workouts.domain.Routine;
-import fi.vamk.beceps.workouts.domain.Set;
 import fi.vamk.beceps.workouts.infrastructure.persistence.RoutineRepository;
-import fi.vamk.beceps.workouts.infrastructure.persistence.SetRepository;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,13 +13,12 @@ import lombok.val;
 
 @Singleton
 @RequiredArgsConstructor
-public class AddSetCommandHandler implements CommandHandler<Void, AddSetCommand> {
+public class RemoveRoutineCommandHandler implements CommandHandler<Void, RemoveRoutineCommand> {
   private final RoutineRepository routineRepository;
-  private final SetRepository setRepository;
 
   @Override
   @Transactional
-  public Void handle(AddSetCommand command) {
+  public Void handle(RemoveRoutineCommand command) {
     val routine = routineRepository
         .findById(command.getRoutineId())
         .orElseThrow(() -> new NotFoundException(Routine.class, command.getRoutineId()));
@@ -30,8 +27,7 @@ public class AddSetCommandHandler implements CommandHandler<Void, AddSetCommand>
       throw new ForbiddenException();
     }
 
-    val set = new Set(command.getName(), command.getSetsAmount(), command.getRepsAmount(), command.getRoutineId());
-    setRepository.insert(set);
+    routineRepository.delete(routine);
 
     return null;
   }

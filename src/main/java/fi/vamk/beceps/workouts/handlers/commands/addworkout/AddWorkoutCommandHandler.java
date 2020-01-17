@@ -1,4 +1,4 @@
-package fi.vamk.beceps.workouts.commands.addworkout;
+package fi.vamk.beceps.workouts.handlers.commands.addworkout;
 
 import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutCommand;
