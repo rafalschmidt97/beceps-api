@@ -13,6 +13,8 @@ public interface ExerciseRepository extends GenericRepository<Exercise, Long> {
 
   List<Exercise> findAllByUserIdAndCreatedAtAfter(Long userId, Date createdAfter);
 
+  List<Exercise> findAllByUserIdAndCreatedAtBetween(Long userId, Date createdAfter, Date createdBefore);
+
   Exercise insert(Exercise exercise);
 
   void delete(Exercise exercise);

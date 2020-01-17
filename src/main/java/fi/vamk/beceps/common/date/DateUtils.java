@@ -19,8 +19,21 @@ public class DateUtils {
   }
 
   public static int getWeekDay() {
-    val calendar = Calendar.getInstance();
-    calendar.setTime(new Date());
     return LocalDate.now().get(ChronoField.DAY_OF_WEEK);
+  }
+
+  public static Date getWeekAgo() {
+    return DateUtils.getDateWithDayAddition(new Date(), -7);
+  }
+
+  public static Date getWeekLater(Date date) {
+    return DateUtils.getDateWithDayAddition(date, 7);
+  }
+
+  private static Date getDateWithDayAddition(Date date, int amount) {
+    val calendar = Calendar.getInstance();
+    calendar.setTime(date);
+    calendar.add(Calendar.DATE, amount);
+    return calendar.getTime();
   }
 }
