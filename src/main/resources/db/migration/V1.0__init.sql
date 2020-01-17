@@ -32,10 +32,11 @@ create table workout
 
 create table routine
 (
-    id         bigint      not null auto_increment,
-    week_day   int         not null,
-    created_at datetime(6) not null default current_timestamp(6),
-    workout_id bigint      not null,
+    id          bigint      not null auto_increment,
+    week_day    int         not null,
+    created_at  datetime(6) not null default current_timestamp(6),
+    modified_at datetime(6),
+    workout_id  bigint      not null,
     primary key (id),
     foreign key (workout_id) references workout (id) on delete cascade
 ) engine = INNODB;
@@ -51,4 +52,16 @@ create table `set`
     routine_id  bigint      not null,
     primary key (id),
     foreign key (routine_id) references routine (id) on delete cascade
+) engine = INNODB;
+
+create table exercise
+(
+    id         bigint      not null auto_increment,
+    reps       int         not null,
+    created_at datetime(6) not null default current_timestamp(6),
+    set_id     bigint      not null,
+    user_id    bigint      not null,
+    primary key (id),
+    foreign key (set_id) references `set` (id) on delete cascade,
+    foreign key (user_id) references user (id) on delete cascade
 ) engine = INNODB;

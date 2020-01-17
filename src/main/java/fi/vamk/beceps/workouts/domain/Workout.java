@@ -46,13 +46,13 @@ public class Workout {
   private List<Routine> routines;
 
   public Workout(String name, Long userId) {
-    this.name = name;
+    this.name = name.trim();
     this.userId = userId;
     this.createdAt = new Date();
   }
 
   public void update(String name) {
-    this.name = name;
+    this.name = name.trim();
     this.modifiedAt = new Date();
   }
 }

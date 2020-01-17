@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface SetRepository extends GenericRepository<Set, Long> {
   Optional<Set> findById(Long id);
 
+  boolean existsById(Long id);
+
   Set insert(Set set);
 
   void delete(Set set);

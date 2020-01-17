@@ -1,7 +1,8 @@
-package fi.vamk.beceps.workouts.domain;
+package fi.vamk.beceps.exercises.domain;
 
+import fi.vamk.beceps.users.domain.User;
+import fi.vamk.beceps.workouts.domain.Set;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,38 +20,35 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Routine {
+public class Exercise {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(nullable = false)
-  private int weekDay;
+  private int reps;
 
   @Column(nullable = false)
   private Date createdAt;
 
-  @Column
-  private Date modifiedAt;
+  @Column(name = "set_id", nullable = false)
+  private Long setId;
 
-  @Column(name = "workout_id", nullable = false)
-  private Long workoutId;
+  @Column(name = "user_id", nullable = false)
+  private Long userId;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "workout_id", insertable = false, updatable = false)
-  private Workout workout;
+  @JoinColumn(name = "set_id", insertable = false, updatable = false)
+  private Set set;
 
-  @OneToMany(mappedBy = "routine", fetch = FetchType.LAZY)
-  private List<Set> sets;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", insertable = false, updatable = false)
+  private User user;
 
-  public Routine(int weekDay, Long workoutId) {
-    this.weekDay = weekDay;
-    this.workoutId = workoutId;
+  public Exercise(int reps, Long setId, Long userId) {
+    this.reps = reps;
+    this.setId = setId;
+    this.userId = userId;
     this.createdAt = new Date();
-  }
-
-  public void update(int weekDay) {
-    this.weekDay = weekDay;
-    this.modifiedAt = new Date();
   }
 }

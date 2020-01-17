@@ -11,9 +11,9 @@ values ('abc', 1),
 insert into workout (`name`, user_id) values ('Workout 1', 1);
 
 insert into routine (week_day, workout_id)
-values (0, 1),
-       (2, 1),
-       (4, 1);
+values (1, 1),
+       (3, 1),
+       (5, 1);
 
 insert into `set` (`name`, sets_amount, reps_amount, routine_id)
 values ('Deadlift', 4, 10, 1),
