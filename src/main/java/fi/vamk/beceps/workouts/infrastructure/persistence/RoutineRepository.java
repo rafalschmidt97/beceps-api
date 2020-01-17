@@ -11,11 +11,9 @@ public interface RoutineRepository extends GenericRepository<Routine, Long> {
 
   Optional<Routine> findByWorkoutIdAndWeekDay(Long workoutId, int weekDay);
 
-  boolean existsById(Long id);
-
   Routine save(Routine routine);
 
   Routine insert(Routine routine);
 
-  void delete(Routine routine);
+  void deleteById(Long id);
 }

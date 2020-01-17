@@ -47,7 +47,9 @@ dependencies {
   testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
   annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronautDataVersion"
+  annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronautDataJdbcVersion"
   compile "io.micronaut.data:micronaut-data-hibernate-jpa:$micronautDataVersion"
+  compile "io.micronaut.data:micronaut-data-jdbc:$micronautDataJdbcVersion"
   runtime "io.micronaut.configuration:micronaut-jdbc-tomcat:$micronautServerVersion"
   compile "mysql:mysql-connector-java:$mysqlConnectorVersion"
 
@@ -71,7 +73,7 @@ checkstyle {
 }
 
 spotbugs {
-  toolVersion "4.0.0-beta4"
+  toolVersion "4.0.0-beta5"
   excludeFilter file("${rootDir}/tools/lint/spotbugs-exclude.xml")
 }
 

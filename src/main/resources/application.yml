@@ -40,6 +40,7 @@ datasources:
     username: root
     password: zaq1@WSX
     driverClassName: com.mysql.cj.jdbc.Driver
+    dialect: MYSQL
 jpa:
   default:
     properties:

@@ -10,8 +10,13 @@
     <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2" />
   </Match>
 
-  <!-- Project does not support @Notnull annotation  -->
+  <!-- Reason: Project does not support @Notnull annotation  -->
   <Match>
     <Bug pattern="NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" />
+  </Match>
+
+  <!-- Reason: JdbcFetcher false true obligation  -->
+  <Match>
+    <Bug pattern="OBL_UNSATISFIED_OBLIGATION" />
   </Match>
 </FindBugsFilter>
