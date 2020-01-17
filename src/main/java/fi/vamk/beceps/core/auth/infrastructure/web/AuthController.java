@@ -6,6 +6,10 @@ import fi.vamk.beceps.core.auth.api.events.commands.logout.LogoutCommand;
 import fi.vamk.beceps.core.auth.api.events.commands.logoutall.LogoutAllCommand;
 import fi.vamk.beceps.core.auth.api.events.commands.refresh.RefreshCommand;
 import fi.vamk.beceps.core.auth.api.events.commands.signup.SignUpCommand;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.LoginRequest;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.LogoutRequest;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.RefreshRequest;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.SignUpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.security.authentication.Authentication;
@@ -16,25 +20,23 @@ import java.security.Principal;
 @Controller("/auth")
 public class AuthController extends SecuredController implements AuthOperations {
   @Override
-  public HttpResponse<AccessRefreshToken> signUp(SignUpCommand request) {
-    return bus.executeCommand(request);
+  public HttpResponse<AccessRefreshToken> signUp(SignUpRequest request) {
+    return bus.executeCommand(new SignUpCommand(request.getEmail(), request.getPassword()));
   }
 
   @Override
-  public Single<HttpResponse<AccessRefreshToken>> login(LoginCommand request) {
-    return bus.executeCommand(request);
+  public Single<HttpResponse<AccessRefreshToken>> login(LoginRequest request) {
+    return bus.executeCommand(new LoginCommand(request.getEmail(), request.getPassword()));
   }
 
   @Override
-  public Single<HttpResponse<AccessRefreshToken>> refresh(RefreshCommand request) {
-    return bus.executeCommand(request);
+  public Single<HttpResponse<AccessRefreshToken>> refresh(RefreshRequest request) {
+    return bus.executeCommand(new RefreshCommand(request.getRefreshToken()));
   }
 
   @Override
-  public HttpResponse logout(LogoutCommand request, Authentication authentication) {
-    request.setUserId(getId(authentication));
-    request.setAuthentication(authentication);
-    return bus.executeCommand(request);
+  public HttpResponse logout(LogoutRequest request, Authentication authentication) {
+    return bus.executeCommand(new LogoutCommand(request.getRefreshToken(), getId(authentication), authentication));
   }
 
   @Override

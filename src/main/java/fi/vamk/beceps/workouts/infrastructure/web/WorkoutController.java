@@ -8,11 +8,16 @@ import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeroutine.RemoveRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeset.RemoveSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeworkout.RemoveWorkoutCommand;
-import fi.vamk.beceps.workouts.api.events.commands.updateroutine.UpdateRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.updateset.UpdateSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.updateworkout.UpdateWorkoutCommand;
 import fi.vamk.beceps.workouts.api.events.dto.WorkoutDto;
 import fi.vamk.beceps.workouts.api.events.queries.getworkouts.GetWorkoutsQuery;
+import fi.vamk.beceps.workouts.infrastructure.web.requests.AddRoutineRequest;
+import fi.vamk.beceps.workouts.infrastructure.web.requests.AddSetRequest;
+import fi.vamk.beceps.workouts.infrastructure.web.requests.AddWorkoutRequest;
+import fi.vamk.beceps.workouts.infrastructure.web.requests.UpdateRoutineRequest;
+import fi.vamk.beceps.workouts.infrastructure.web.requests.UpdateSetRequest;
+import fi.vamk.beceps.workouts.infrastructure.web.requests.UpdateWorkoutRequest;
 import io.micronaut.http.annotation.Controller;
 import java.security.Principal;
 import java.util.List;
@@ -26,16 +31,13 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
-  public void addWorkout(@Valid AddWorkoutCommand request, Principal principal) {
-    request.setUserId(getId(principal));
-    bus.executeCommand(request);
+  public void addWorkout(@Valid AddWorkoutRequest request, Principal principal) {
+    bus.executeCommand(new AddWorkoutCommand(request.getName(), getId(principal)));
   }
 
   @Override
-  public void updateWorkout(Long workoutId, @Valid UpdateWorkoutCommand request, Principal principal) {
-    request.setUserId(getId(principal));
-    request.setWorkoutId(workoutId);
-    bus.executeCommand(request);
+  public void updateWorkout(Long workoutId, @Valid UpdateWorkoutRequest request, Principal principal) {
+    bus.executeCommand(new UpdateWorkoutCommand(request.getName(), workoutId, getId(principal)));
   }
 
   @Override
@@ -44,16 +46,13 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
-  public void addRoutine(@Valid AddRoutineCommand request, Principal principal) {
-    request.setUserId(getId(principal));
-    bus.executeCommand(request);
+  public void addRoutine(@Valid AddRoutineRequest request, Principal principal) {
+    bus.executeCommand(new AddRoutineCommand(request.getWeekDay(), request.getWorkoutId(), getId(principal)));
   }
 
   @Override
-  public void updateRoutine(Long routineId, UpdateRoutineCommand request, Principal principal) {
-    request.setUserId(getId(principal));
-    request.setRoutineId(routineId);
-    bus.executeCommand(request);
+  public void updateRoutine(Long routineId, UpdateRoutineRequest request, Principal principal) {
+    bus.executeCommand(new AddRoutineCommand(request.getWeekDay(), routineId, getId(principal)));
   }
 
   @Override
@@ -62,16 +61,27 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
-  public void addSet(@Valid AddSetCommand request, Principal principal) {
-    request.setUserId(getId(principal));
-    bus.executeCommand(request);
+  public void addSet(@Valid AddSetRequest request, Principal principal) {
+    bus.executeCommand(
+        new AddSetCommand(
+            request.getName(),
+            request.getSetsAmount(),
+            request.getRepsAmount(),
+            request.getRoutineId(),
+            getId(principal))
+    );
   }
 
   @Override
-  public void updateSet(Long setId, UpdateSetCommand request, Principal principal) {
-    request.setUserId(getId(principal));
-    request.setSetId(setId);
-    bus.executeCommand(request);
+  public void updateSet(Long setId, UpdateSetRequest request, Principal principal) {
+    bus.executeCommand(
+        new UpdateSetCommand(
+            request.getName(),
+            request.getSetsAmount(),
+            request.getRepsAmount(),
+            setId,
+            getId(principal))
+    );
   }
 
   @Override

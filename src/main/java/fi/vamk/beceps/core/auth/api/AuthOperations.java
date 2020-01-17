@@ -1,9 +1,9 @@
 package fi.vamk.beceps.core.auth.api;
 
-import fi.vamk.beceps.core.auth.api.events.commands.login.LoginCommand;
-import fi.vamk.beceps.core.auth.api.events.commands.logout.LogoutCommand;
-import fi.vamk.beceps.core.auth.api.events.commands.refresh.RefreshCommand;
-import fi.vamk.beceps.core.auth.api.events.commands.signup.SignUpCommand;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.LoginRequest;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.LogoutRequest;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.RefreshRequest;
+import fi.vamk.beceps.core.auth.infrastructure.web.requests.SignUpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Post;
@@ -22,21 +22,21 @@ public interface AuthOperations {
   @Post("/sign-up")
   @Secured(SecurityRule.IS_ANONYMOUS)
   @Operation(summary = "Sign up with credentials.")
-  HttpResponse<AccessRefreshToken> signUp(@Valid @Body SignUpCommand request);
+  HttpResponse<AccessRefreshToken> signUp(@Valid @Body SignUpRequest request);
 
   @Post("/login")
   @Secured(SecurityRule.IS_ANONYMOUS)
   @Operation(summary = "Login with credentials.")
-  Single<HttpResponse<AccessRefreshToken>> login(@Valid @Body LoginCommand request);
+  Single<HttpResponse<AccessRefreshToken>> login(@Valid @Body LoginRequest request);
 
   @Post("/refresh")
   @Secured(SecurityRule.IS_ANONYMOUS)
   @Operation(summary = "Refresh access token using refresh token.")
-  Single<HttpResponse<AccessRefreshToken>> refresh(@Valid @Body RefreshCommand request);
+  Single<HttpResponse<AccessRefreshToken>> refresh(@Valid @Body RefreshRequest request);
 
   @Post("/logout")
   @Operation(summary = "Logout using refresh token.")
-  HttpResponse logout(@Valid @Body LogoutCommand request, Authentication authentication);
+  HttpResponse logout(@Valid @Body LogoutRequest request, Authentication authentication);
 
   @Post("/logout/all")
   @Operation(summary = "Logout from all devices.")
