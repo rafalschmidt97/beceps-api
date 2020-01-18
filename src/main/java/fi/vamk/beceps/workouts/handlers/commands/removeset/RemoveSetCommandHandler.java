@@ -6,6 +6,7 @@ import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.workouts.api.events.commands.removeset.RemoveSetCommand;
 import fi.vamk.beceps.workouts.domain.Set;
 import fi.vamk.beceps.workouts.infrastructure.persistence.SetRepository;
+import fi.vamk.beceps.workouts.infrastructure.persistence.SqlSetRepository;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,19 +16,20 @@ import lombok.val;
 @RequiredArgsConstructor
 public class RemoveSetCommandHandler implements CommandHandler<Void, RemoveSetCommand> {
   private final SetRepository setRepository;
+  private final SqlSetRepository sqlSetRepository;
 
   @Override
   @Transactional
   public Void handle(RemoveSetCommand command) {
-    val set = setRepository
-        .findById(command.getSetId())
+    val set = sqlSetRepository
+        .findWithUserIdById(command.getSetId())
         .orElseThrow(() -> new NotFoundException(Set.class, command.getSetId()));
 
-    if (!set.getRoutine().getWorkout().getUserId().equals(command.getUserId())) {
+    if (!set.getUserId().equals(command.getUserId())) {
       throw new ForbiddenException();
     }
 
-    setRepository.delete(set);
+    setRepository.deleteById(set.getId());
 
     return null;
   }

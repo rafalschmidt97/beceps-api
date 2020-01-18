@@ -8,9 +8,8 @@ import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.exercises.api.events.commands.addexercise.AddExerciseCommand;
 import fi.vamk.beceps.exercises.domain.Exercise;
 import fi.vamk.beceps.exercises.infrastructure.persistence.ExerciseRepository;
-import fi.vamk.beceps.workouts.domain.Routine;
 import fi.vamk.beceps.workouts.domain.Set;
-import fi.vamk.beceps.workouts.infrastructure.persistence.SetRepository;
+import fi.vamk.beceps.workouts.infrastructure.persistence.SqlSetRepository;
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,28 +18,26 @@ import lombok.val;
 @Singleton
 @RequiredArgsConstructor
 public class AddExerciseCommandHandler implements CommandHandler<Void, AddExerciseCommand> {
-  private final SetRepository setRepository;
+  private final SqlSetRepository sqlSetRepository;
   private final ExerciseRepository exerciseRepository;
 
   @Override
   @Transactional
   public Void handle(AddExerciseCommand command) {
-    val set = setRepository
-        .findById(command.getSetId())
+    val setCheck = sqlSetRepository
+        .findWithUserIdById(command.getSetId())
         .orElseThrow(() -> new NotFoundException(Set.class, command.getSetId()));
 
-    if (!set.getRoutine().getWorkout().getUserId().equals(command.getUserId())) {
+    if (!setCheck.getUserId().equals(command.getUserId())) {
       throw new ForbiddenException();
     }
 
-    if (set.getRoutine().getWeekDay() != DateUtils.getWeekDay()) {
+    if (setCheck.getWeekDay() != DateUtils.getWeekDay()) {
       throw new ConflictException(
         String.format(
-          "%s(%s) from %s(%s) is not in today.",
+          "%s(%s) is not in today.",
           Set.class.getSimpleName(),
-          set.getId(),
-          Routine.class.getSimpleName(),
-          set.getRoutine().getId()
+          setCheck.getId()
         )
       );
     }

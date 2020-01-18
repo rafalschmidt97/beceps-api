@@ -17,6 +17,6 @@ public interface ExerciseRepository extends GenericRepository<Exercise, Long> {
 
   Exercise insert(Exercise exercise);
 
-  void delete(Exercise exercise);
+  void deleteById(Long id);
 }
 
