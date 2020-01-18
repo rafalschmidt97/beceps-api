@@ -1,7 +1,7 @@
 package fi.vamk.beceps.workouts.domain;
 
 import fi.vamk.beceps.users.domain.User;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,10 +30,10 @@ public class Workout {
   private String name;
 
   @Column(nullable = false)
-  private Date createdAt;
+  private Instant createdAt;
 
   @Column
-  private Date modifiedAt;
+  private Instant modifiedAt;
 
   @Column(name = "user_id", nullable = false)
   private Long userId;
@@ -48,11 +48,11 @@ public class Workout {
   public Workout(String name, Long userId) {
     this.name = name.trim();
     this.userId = userId;
-    this.createdAt = new Date();
+    this.createdAt = Instant.now();
   }
 
   public void update(String name) {
     this.name = name.trim();
-    this.modifiedAt = new Date();
+    this.modifiedAt = Instant.now();
   }
 }

@@ -1,7 +1,7 @@
 package fi.vamk.beceps.core.auth.domain;
 
 import fi.vamk.beceps.users.domain.User;
-import java.util.Date;
+import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +25,7 @@ public class RefreshToken {
   private Long id;
 
   @Column(nullable = false)
-  private Date issuedAt;
+  private Instant issuedAt;
 
   @Column(nullable = false, length = 512)
   private String token;
@@ -38,7 +38,7 @@ public class RefreshToken {
   private User user;
 
   public RefreshToken(String token, Long userId) {
-    this.issuedAt = new Date();
+    this.issuedAt = Instant.now();
     this.token = token;
     this.userId = userId;
   }

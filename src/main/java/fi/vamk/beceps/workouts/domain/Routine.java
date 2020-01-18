@@ -1,6 +1,6 @@
 package fi.vamk.beceps.workouts.domain;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +29,10 @@ public class Routine {
   private int weekDay;
 
   @Column(nullable = false)
-  private Date createdAt;
+  private Instant createdAt;
 
   @Column
-  private Date modifiedAt;
+  private Instant modifiedAt;
 
   @Column(name = "workout_id", nullable = false)
   private Long workoutId;
@@ -47,11 +47,11 @@ public class Routine {
   public Routine(int weekDay, Long workoutId) {
     this.weekDay = weekDay;
     this.workoutId = workoutId;
-    this.createdAt = new Date();
+    this.createdAt = Instant.now();
   }
 
   public void update(int weekDay) {
     this.weekDay = weekDay;
-    this.modifiedAt = new Date();
+    this.modifiedAt = Instant.now();
   }
 }

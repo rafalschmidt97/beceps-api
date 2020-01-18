@@ -1,7 +1,7 @@
 package fi.vamk.beceps.exercises.handlers.commands.addexercise;
 
 import fi.vamk.beceps.common.bus.command.CommandHandler;
-import fi.vamk.beceps.common.date.DateUtils;
+import fi.vamk.beceps.common.date.TimeUtils;
 import fi.vamk.beceps.common.exceptions.ConflictException;
 import fi.vamk.beceps.common.exceptions.ForbiddenException;
 import fi.vamk.beceps.common.exceptions.NotFoundException;
@@ -32,7 +32,7 @@ public class AddExerciseCommandHandler implements CommandHandler<Void, AddExerci
       throw new ForbiddenException();
     }
 
-    if (setCheck.getWeekDay() != DateUtils.getWeekDay()) {
+    if (setCheck.getWeekDay() != TimeUtils.getWeekDay()) {
       throw new ConflictException(
         String.format(
           "%s(%s) is not in today.",

@@ -1,6 +1,6 @@
 package fi.vamk.beceps.exercises.infrastructure.web;
 
-import fi.vamk.beceps.common.date.DateUtils;
+import fi.vamk.beceps.common.date.TimeUtils;
 import fi.vamk.beceps.core.auth.infrastructure.web.SecuredController;
 import fi.vamk.beceps.exercises.api.ExerciseOperations;
 import fi.vamk.beceps.exercises.api.events.commands.addexercise.AddExerciseCommand;
@@ -12,7 +12,7 @@ import fi.vamk.beceps.exercises.api.events.queries.gethistory.GetExercisesHistor
 import fi.vamk.beceps.exercises.infrastructure.web.requests.AddExerciseRequest;
 import io.micronaut.http.annotation.Controller;
 import java.security.Principal;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -25,9 +25,9 @@ public class ExerciseController extends SecuredController implements ExerciseOpe
   }
 
   @Override
-  public List<ExerciseWorkoutHistoryDto> getHistory(Optional<Date> from, Principal principal) {
+  public List<ExerciseWorkoutHistoryDto> getHistory(Optional<Instant> from, Principal principal) {
     return bus.executeQuery(
-        new GetExercisesHistoryQuery(from.orElse(DateUtils.getWeekAgo()), getId(principal)));
+        new GetExercisesHistoryQuery(from.orElse(TimeUtils.getWeekAgo()), getId(principal)));
   }
 
   @Override

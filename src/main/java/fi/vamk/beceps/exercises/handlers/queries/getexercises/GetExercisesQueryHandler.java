@@ -1,7 +1,7 @@
 package fi.vamk.beceps.exercises.handlers.queries.getexercises;
 
 import fi.vamk.beceps.common.bus.query.QueryHandler;
-import fi.vamk.beceps.common.date.DateUtils;
+import fi.vamk.beceps.common.date.TimeUtils;
 import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.exercises.api.events.dto.ExerciseWorkoutDto;
 import fi.vamk.beceps.exercises.api.events.queries.getexercises.GetExercisesQuery;
@@ -26,14 +26,14 @@ public class GetExercisesQueryHandler implements QueryHandler<List<ExerciseWorko
   @Transactional
   public List<ExerciseWorkoutDto> handle(GetExercisesQuery query) {
     val todayExercises = exerciseRepository
-        .findAllByUserIdAndCreatedAtAfter(query.getUserId(), DateUtils.getTodayMidnight());
+        .findAllByUserIdAndCreatedAtAfter(query.getUserId(), TimeUtils.getTodayMidnight());
 
     return workoutRepository
       .findAllByUserId(query.getUserId())
       .stream()
       .map(workout -> {
         val routine = routineRepository
-            .findByWorkoutIdAndWeekDay(workout.getId(), DateUtils.getWeekDay())
+            .findByWorkoutIdAndWeekDay(workout.getId(), TimeUtils.getWeekDay())
             .orElseThrow(() -> new NotFoundException("No routines available today."));
 
         return new ExerciseWorkoutDto(workout, routine, todayExercises);

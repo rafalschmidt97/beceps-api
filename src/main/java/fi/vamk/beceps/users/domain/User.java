@@ -1,7 +1,7 @@
 package fi.vamk.beceps.users.domain;
 
 import fi.vamk.beceps.common.exceptions.ConflictException;
-import java.util.Date;
+import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,18 +28,18 @@ public class User {
   private String password;
 
   @Column(nullable = false)
-  private Date createdAt;
+  private Instant createdAt;
 
   @Column(nullable = false)
   private boolean isLocked;
 
   @Column
-  private Date lockedAt;
+  private Instant lockedAt;
 
   public User(String email, String password) {
     this.email = email;
     this.password = password;
-    this.createdAt = new Date();
+    this.createdAt = Instant.now();
   }
 
   @Override
@@ -53,6 +53,6 @@ public class User {
     }
 
     isLocked = true;
-    lockedAt = new Date();
+    lockedAt = Instant.now();
   }
 }

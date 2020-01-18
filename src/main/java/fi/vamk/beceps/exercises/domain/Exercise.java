@@ -2,7 +2,7 @@ package fi.vamk.beceps.exercises.domain;
 
 import fi.vamk.beceps.users.domain.User;
 import fi.vamk.beceps.workouts.domain.Set;
-import java.util.Date;
+import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,7 +29,7 @@ public class Exercise {
   private int reps;
 
   @Column(nullable = false)
-  private Date createdAt;
+  private Instant createdAt;
 
   @Column(name = "set_id", nullable = false)
   private Long setId;
@@ -49,6 +49,6 @@ public class Exercise {
     this.reps = reps;
     this.setId = setId;
     this.userId = userId;
-    this.createdAt = new Date();
+    this.createdAt = Instant.now();
   }
 }

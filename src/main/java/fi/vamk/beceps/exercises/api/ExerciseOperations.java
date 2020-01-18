@@ -10,7 +10,7 @@ import io.micronaut.http.annotation.Post;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.security.Principal;
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -23,7 +23,7 @@ public interface ExerciseOperations {
 
   @Get("/history{?from}")
   @Operation(summary = "Get history exercises.")
-  List<ExerciseWorkoutHistoryDto> getHistory(Optional<Date> from, Principal principal);
+  List<ExerciseWorkoutHistoryDto> getHistory(Optional<Instant> from, Principal principal);
 
   @Post()
   @Operation(summary = "Add new exercise progress.")

@@ -1,6 +1,6 @@
 package fi.vamk.beceps.workouts.domain;
 
-import java.util.Date;
+import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,10 +35,10 @@ public class Set {
   private int repsAmount;
 
   @Column(nullable = false)
-  private Date createdAt;
+  private Instant createdAt;
 
   @Column
-  private Date modifiedAt;
+  private Instant modifiedAt;
 
   @Column(name = "routine_id", nullable = false)
   private Long routineId;
@@ -52,13 +52,13 @@ public class Set {
     this.setsAmount = setsAmount;
     this.repsAmount = repsAmount;
     this.routineId = routineId;
-    this.createdAt = new Date();
+    this.createdAt = Instant.now();
   }
 
   public void update(String name, int setsAmount, int repsAmount) {
     this.name = name.trim();
     this.setsAmount = setsAmount;
     this.repsAmount = repsAmount;
-    this.modifiedAt = new Date();
+    this.modifiedAt = Instant.now();
   }
 }
