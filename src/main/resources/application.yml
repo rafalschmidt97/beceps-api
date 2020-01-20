@@ -40,16 +40,16 @@ datasources:
     username: root
     password: zaq1@WSX
     driverClassName: com.mysql.cj.jdbc.Driver
+    schema-generate: NONE
     dialect: MYSQL
 jpa:
   default:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
         naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
         hbm2ddl:
           auto: validate
-#        show_sql: true
+        show_sql: true
 jackson:
   serialization:
     failOnEmptyBeans: false

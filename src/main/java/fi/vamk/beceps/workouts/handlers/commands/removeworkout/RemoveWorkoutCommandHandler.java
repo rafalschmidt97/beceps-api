@@ -7,7 +7,6 @@ import fi.vamk.beceps.workouts.api.events.commands.removeworkout.RemoveWorkoutCo
 import fi.vamk.beceps.workouts.domain.Workout;
 import fi.vamk.beceps.workouts.infrastructure.persistence.WorkoutRepository;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -17,7 +16,6 @@ public class RemoveWorkoutCommandHandler implements CommandHandler<Void, RemoveW
   private final WorkoutRepository workoutRepository;
 
   @Override
-  @Transactional
   public Void handle(RemoveWorkoutCommand command) {
     val workout = workoutRepository
         .findById(command.getWorkoutId())
@@ -27,7 +25,7 @@ public class RemoveWorkoutCommandHandler implements CommandHandler<Void, RemoveW
       throw new ForbiddenException();
     }
 
-    workoutRepository.delete(workout);
+    workoutRepository.deleteById(workout.getId());
 
     return null;
   }

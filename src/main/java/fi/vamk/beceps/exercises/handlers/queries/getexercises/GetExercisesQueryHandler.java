@@ -11,7 +11,6 @@ import fi.vamk.beceps.workouts.infrastructure.persistence.WorkoutRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -23,13 +22,12 @@ public class GetExercisesQueryHandler implements QueryHandler<List<ExerciseWorko
   private final ExerciseRepository exerciseRepository;
 
   @Override
-  @Transactional
   public List<ExerciseWorkoutDto> handle(GetExercisesQuery query) {
     val todayExercises = exerciseRepository
         .findAllByUserIdAndCreatedAtAfter(query.getUserId(), TimeUtils.getTodayMidnight());
 
     return workoutRepository
-      .findAllByUserId(query.getUserId())
+      .findAllWithRoutinesAndSetsByUserId(query.getUserId())
       .stream()
       .map(workout -> {
         val routine = routineRepository

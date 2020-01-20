@@ -6,21 +6,19 @@ import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetCommand;
 import fi.vamk.beceps.workouts.domain.Routine;
 import fi.vamk.beceps.workouts.domain.Set;
+import fi.vamk.beceps.workouts.infrastructure.persistence.RoutineRepository;
 import fi.vamk.beceps.workouts.infrastructure.persistence.SetRepository;
-import fi.vamk.beceps.workouts.infrastructure.persistence.SqlRoutineRepository;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 @Singleton
 @RequiredArgsConstructor
 public class AddSetCommandHandler implements CommandHandler<Void, AddSetCommand> {
-  private final SqlRoutineRepository sqlRoutineRepository;
+  private final RoutineRepository sqlRoutineRepository;
   private final SetRepository setRepository;
 
   @Override
-  @Transactional
   public Void handle(AddSetCommand command) {
     val routineCheck = sqlRoutineRepository
         .findWithUserIdById(command.getRoutineId())

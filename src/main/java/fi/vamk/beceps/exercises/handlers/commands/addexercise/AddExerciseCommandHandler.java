@@ -9,20 +9,18 @@ import fi.vamk.beceps.exercises.api.events.commands.addexercise.AddExerciseComma
 import fi.vamk.beceps.exercises.domain.Exercise;
 import fi.vamk.beceps.exercises.infrastructure.persistence.ExerciseRepository;
 import fi.vamk.beceps.workouts.domain.Set;
-import fi.vamk.beceps.workouts.infrastructure.persistence.SqlSetRepository;
+import fi.vamk.beceps.workouts.infrastructure.persistence.SetRepository;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 @Singleton
 @RequiredArgsConstructor
 public class AddExerciseCommandHandler implements CommandHandler<Void, AddExerciseCommand> {
-  private final SqlSetRepository sqlSetRepository;
+  private final SetRepository sqlSetRepository;
   private final ExerciseRepository exerciseRepository;
 
   @Override
-  @Transactional
   public Void handle(AddExerciseCommand command) {
     val setCheck = sqlSetRepository
         .findWithUserIdById(command.getSetId())

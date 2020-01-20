@@ -6,9 +6,7 @@ import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.workouts.api.events.commands.updateset.UpdateSetCommand;
 import fi.vamk.beceps.workouts.domain.Set;
 import fi.vamk.beceps.workouts.infrastructure.persistence.SetRepository;
-import fi.vamk.beceps.workouts.infrastructure.persistence.SqlSetRepository;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -16,12 +14,10 @@ import lombok.val;
 @RequiredArgsConstructor
 public class UpdateSetCommandHandler implements CommandHandler<Void, UpdateSetCommand> {
   private final SetRepository setRepository;
-  private final SqlSetRepository sqlSetRepository;
 
   @Override
-  @Transactional
   public Void handle(UpdateSetCommand command) {
-    val setCheck = sqlSetRepository
+    val setCheck = setRepository
         .findWithUserIdById(command.getSetId())
         .orElseThrow(() -> new NotFoundException(Set.class, command.getSetId()));
 
@@ -34,7 +30,7 @@ public class UpdateSetCommandHandler implements CommandHandler<Void, UpdateSetCo
         .orElseThrow(() -> new NotFoundException(Set.class, command.getSetId()));
 
     set.update(command.getName(), command.getSetsAmount(), command.getRepsAmount());
-    setRepository.save(set);
+    setRepository.update(set);
 
     return null;
   }

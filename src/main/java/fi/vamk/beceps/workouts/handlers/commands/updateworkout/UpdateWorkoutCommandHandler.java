@@ -7,7 +7,6 @@ import fi.vamk.beceps.workouts.api.events.commands.updateworkout.UpdateWorkoutCo
 import fi.vamk.beceps.workouts.domain.Workout;
 import fi.vamk.beceps.workouts.infrastructure.persistence.WorkoutRepository;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -17,7 +16,6 @@ public class UpdateWorkoutCommandHandler implements CommandHandler<Void, UpdateW
   private final WorkoutRepository workoutRepository;
 
   @Override
-  @Transactional
   public Void handle(UpdateWorkoutCommand command) {
     val workout = workoutRepository
         .findById(command.getWorkoutId())
@@ -28,7 +26,7 @@ public class UpdateWorkoutCommandHandler implements CommandHandler<Void, UpdateW
     }
 
     workout.update(command.getName());
-    workoutRepository.save(workout);
+    workoutRepository.update(workout);
 
     return null;
   }

@@ -38,6 +38,16 @@ public class JdbcFetcher {
     });
   }
 
+  public void execute(
+      String query,
+      ThrowingConsumer<PreparedStatement, SQLException> statements
+  ) {
+    jdbcOperations.prepareStatement(query, jdbcStatement -> {
+      statements.accept(jdbcStatement);
+      return jdbcStatement.executeQuery();
+    });
+  }
+
   public interface ThrowingConsumer<T, E extends Exception> {
     void accept(T input) throws E;
   }

@@ -9,7 +9,6 @@ import fi.vamk.beceps.workouts.infrastructure.persistence.WorkoutRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Singleton;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
@@ -22,7 +21,6 @@ public class GetExercisesHistoryQueryHandler implements
   private final ExerciseRepository exerciseRepository;
 
   @Override
-  @Transactional
   public List<ExerciseWorkoutHistoryDto> handle(GetExercisesHistoryQuery query) {
     val exercises = exerciseRepository.findAllByUserIdAndCreatedAtBetween(
         query.getUserId(),
@@ -31,7 +29,7 @@ public class GetExercisesHistoryQueryHandler implements
     );
 
     return workoutRepository
-      .findAllByUserId(query.getUserId())
+      .findAllWithRoutinesAndSetsByUserId(query.getUserId())
       .stream()
       .map(workout -> new ExerciseWorkoutHistoryDto(workout, exercises))
       .collect(Collectors.toList());

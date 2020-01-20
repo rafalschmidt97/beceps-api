@@ -3,13 +3,11 @@ package fi.vamk.beceps.workouts.domain;
 import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,8 +41,7 @@ public class Set {
   @Column(name = "routine_id", nullable = false)
   private Long routineId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "routine_id", insertable = false, updatable = false)
+  @Transient
   private Routine routine;
 
   public Set(String name, int setsAmount, int repsAmount, Long routineId) {

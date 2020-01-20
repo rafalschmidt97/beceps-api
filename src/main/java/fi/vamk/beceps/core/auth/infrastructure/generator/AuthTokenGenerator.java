@@ -48,7 +48,7 @@ public class AuthTokenGenerator extends AccessRefreshTokenGenerator {
           accessRefreshToken.get().getRefreshToken(),
           ((AuthUserDetails) userDetails).getId()
       );
-      refreshTokenRepository.insert(refreshToken);
+      refreshTokenRepository.save(refreshToken);
     }
 
     return accessRefreshToken;
