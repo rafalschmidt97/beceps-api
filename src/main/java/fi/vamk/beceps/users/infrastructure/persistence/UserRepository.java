@@ -5,18 +5,16 @@ import io.micronaut.data.jdbc.annotation.JdbcRepository;
 import io.micronaut.data.model.query.builder.sql.Dialect;
 import io.micronaut.data.repository.GenericRepository;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 
 @JdbcRepository(dialect = Dialect.MYSQL)
-@RequiredArgsConstructor
-public abstract class UserRepository implements GenericRepository<User, Long> {
-  public abstract Optional<User> findById(Long id);
+public interface UserRepository extends GenericRepository<User, Long> {
+  Optional<User> findById(Long id);
 
-  public abstract Optional<User> findByEmail(String email);
+  Optional<User> findByEmail(String email);
 
-  public abstract boolean existsByEmail(String email);
+  boolean existsByEmail(String email);
 
-  public abstract boolean existsById(Long userId);
+  boolean existsById(Long userId);
 
-  public abstract User insert(User user);
+  User insert(User user);
 }
