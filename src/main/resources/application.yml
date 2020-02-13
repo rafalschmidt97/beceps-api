@@ -3,6 +3,8 @@ micronaut:
     name: beceps
   server:
     port: ${SERVICE_PORT:8080}
+    cors:
+      enabled: true
   router:
     static-resources:
       swagger:
