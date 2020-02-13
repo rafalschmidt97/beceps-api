@@ -22,6 +22,9 @@ public class Routine {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false, length = 30)
+  private String name;
+
   @Column(nullable = false)
   private int weekDay;
 
@@ -40,13 +43,15 @@ public class Routine {
   @Transient
   private List<Set> sets;
 
-  public Routine(int weekDay, Long workoutId) {
+  public Routine(String name, int weekDay, Long workoutId) {
+    this.name = name;
     this.weekDay = weekDay;
     this.workoutId = workoutId;
     this.createdAt = Instant.now();
   }
 
-  public void update(int weekDay) {
+  public void update(String name, int weekDay) {
+    this.name = name;
     this.weekDay = weekDay;
     this.modifiedAt = Instant.now();
   }

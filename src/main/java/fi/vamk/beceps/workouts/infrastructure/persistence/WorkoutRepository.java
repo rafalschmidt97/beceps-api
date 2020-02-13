@@ -42,6 +42,7 @@ public abstract class WorkoutRepository implements GenericRepository<Workout, Lo
             statement.setLong(1, workout.getId());
           }, record -> new Routine(
             record.getLong("id"),
+            record.getString("name"),
             record.getInt("week_day"),
             null,
             null,

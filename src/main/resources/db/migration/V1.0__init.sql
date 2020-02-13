@@ -33,6 +33,7 @@ create table workout
 create table routine
 (
     id          bigint      not null auto_increment,
+    name        varchar(30) not null,
     week_day    int         not null,
     created_at  datetime(6) not null default current_timestamp(6),
     modified_at datetime(6),

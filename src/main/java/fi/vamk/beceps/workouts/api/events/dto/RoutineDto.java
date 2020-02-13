@@ -11,6 +11,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class RoutineDto {
   private Long id;
+  private String name;
   private int weekDay;
 
   @JsonInclude
@@ -18,6 +19,7 @@ public class RoutineDto {
 
   public RoutineDto(Routine routine) {
     this.id = routine.getId();
+    this.name = routine.getName();
     this.weekDay = routine.getWeekDay();
     this.sets = routine.getSets()
       .stream()

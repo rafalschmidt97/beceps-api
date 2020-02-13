@@ -29,7 +29,7 @@ public class AddRoutineCommandHandler implements CommandHandler<AddRoutineRespon
       throw new ForbiddenException();
     }
 
-    val routine = new Routine(command.getWeekDay(), command.getWorkoutId());
+    val routine = new Routine(command.getName(), command.getWeekDay(), command.getWorkoutId());
     routineRepository.insert(routine);
 
     return new AddRoutineResponse(routine.getId());

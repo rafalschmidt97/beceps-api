@@ -29,7 +29,7 @@ public class UpdateRoutineCommandHandler implements CommandHandler<Void, UpdateR
         .findById(command.getRoutineId())
         .orElseThrow(() -> new NotFoundException(Routine.class, command.getRoutineId()));
 
-    routine.update(command.getWeekDay());
+    routine.update(command.getName(), command.getWeekDay());
     routineRepository.update(routine);
 
     return null;

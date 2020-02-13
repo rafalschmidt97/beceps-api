@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AddRoutineCommand implements Command<AddRoutineResponse> {
+  private String name;
   private int weekDay;
   private Long workoutId;
   private Long userId;
