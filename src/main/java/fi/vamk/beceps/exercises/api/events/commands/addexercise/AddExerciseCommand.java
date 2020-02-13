@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddExerciseCommand implements Command<Void> {
+public class AddExerciseCommand implements Command<AddExerciseResponse> {
   private int reps;
   private Long setId;
   private Long userId;

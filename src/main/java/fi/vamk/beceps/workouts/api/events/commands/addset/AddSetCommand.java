@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddSetCommand implements Command<Void> {
+public class AddSetCommand implements Command<AddSetResponse> {
   private String name;
   private int setsAmount;
   private int repsAmount;

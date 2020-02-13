@@ -1,5 +1,6 @@
 package fi.vamk.beceps.exercises.api;
 
+import fi.vamk.beceps.exercises.api.events.commands.addexercise.AddExerciseResponse;
 import fi.vamk.beceps.exercises.api.events.dto.ExerciseWorkoutDto;
 import fi.vamk.beceps.exercises.api.events.dto.ExerciseWorkoutHistoryDto;
 import fi.vamk.beceps.exercises.infrastructure.web.requests.AddExerciseRequest;
@@ -27,7 +28,7 @@ public interface ExerciseOperations {
 
   @Post()
   @Operation(summary = "Add new exercise progress.")
-  void addExercise(@Valid @Body AddExerciseRequest request, Principal principal);
+  AddExerciseResponse addExercise(@Valid @Body AddExerciseRequest request, Principal principal);
 
   @Delete("/{exerciseId}")
   @Operation(summary = "Remove existing exercise progress.")

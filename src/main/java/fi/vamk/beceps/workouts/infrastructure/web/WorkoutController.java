@@ -3,8 +3,11 @@ package fi.vamk.beceps.workouts.infrastructure.web;
 import fi.vamk.beceps.core.auth.infrastructure.web.SecuredController;
 import fi.vamk.beceps.workouts.api.WorkoutOperations;
 import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineCommand;
+import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineResponse;
 import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetCommand;
+import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetResponse;
 import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutCommand;
+import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutResponse;
 import fi.vamk.beceps.workouts.api.events.commands.removeroutine.RemoveRoutineCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeset.RemoveSetCommand;
 import fi.vamk.beceps.workouts.api.events.commands.removeworkout.RemoveWorkoutCommand;
@@ -31,8 +34,8 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
-  public void addWorkout(@Valid AddWorkoutRequest request, Principal principal) {
-    bus.executeCommand(new AddWorkoutCommand(request.getName(), getId(principal)));
+  public AddWorkoutResponse addWorkout(@Valid AddWorkoutRequest request, Principal principal) {
+    return bus.executeCommand(new AddWorkoutCommand(request.getName(), getId(principal)));
   }
 
   @Override
@@ -46,8 +49,8 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
-  public void addRoutine(@Valid AddRoutineRequest request, Principal principal) {
-    bus.executeCommand(new AddRoutineCommand(request.getWeekDay(), request.getWorkoutId(), getId(principal)));
+  public AddRoutineResponse addRoutine(@Valid AddRoutineRequest request, Principal principal) {
+    return bus.executeCommand(new AddRoutineCommand(request.getWeekDay(), request.getWorkoutId(), getId(principal)));
   }
 
   @Override
@@ -61,8 +64,8 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
   }
 
   @Override
-  public void addSet(@Valid AddSetRequest request, Principal principal) {
-    bus.executeCommand(
+  public AddSetResponse addSet(@Valid AddSetRequest request, Principal principal) {
+    return bus.executeCommand(
         new AddSetCommand(
             request.getName(),
             request.getSetsAmount(),

@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddWorkoutCommand implements Command<Void> {
+public class AddWorkoutCommand implements Command<AddWorkoutResponse> {
   private String name;
   private Long userId;
 }

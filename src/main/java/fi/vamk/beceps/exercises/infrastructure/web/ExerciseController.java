@@ -4,6 +4,7 @@ import fi.vamk.beceps.common.date.TimeUtils;
 import fi.vamk.beceps.core.auth.infrastructure.web.SecuredController;
 import fi.vamk.beceps.exercises.api.ExerciseOperations;
 import fi.vamk.beceps.exercises.api.events.commands.addexercise.AddExerciseCommand;
+import fi.vamk.beceps.exercises.api.events.commands.addexercise.AddExerciseResponse;
 import fi.vamk.beceps.exercises.api.events.commands.removeexercise.RemoveExerciseCommand;
 import fi.vamk.beceps.exercises.api.events.dto.ExerciseWorkoutDto;
 import fi.vamk.beceps.exercises.api.events.dto.ExerciseWorkoutHistoryDto;
@@ -31,8 +32,8 @@ public class ExerciseController extends SecuredController implements ExerciseOpe
   }
 
   @Override
-  public void addExercise(@Valid AddExerciseRequest request, Principal principal) {
-    bus.executeCommand(new AddExerciseCommand(request.getReps(), request.getSetId(), getId(principal)));
+  public AddExerciseResponse addExercise(@Valid AddExerciseRequest request, Principal principal) {
+    return bus.executeCommand(new AddExerciseCommand(request.getReps(), request.getSetId(), getId(principal)));
   }
 
   @Override

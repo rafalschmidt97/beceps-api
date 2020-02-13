@@ -1,5 +1,8 @@
 package fi.vamk.beceps.workouts.api;
 
+import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineResponse;
+import fi.vamk.beceps.workouts.api.events.commands.addset.AddSetResponse;
+import fi.vamk.beceps.workouts.api.events.commands.addworkout.AddWorkoutResponse;
 import fi.vamk.beceps.workouts.api.events.dto.WorkoutDto;
 import fi.vamk.beceps.workouts.infrastructure.web.requests.AddRoutineRequest;
 import fi.vamk.beceps.workouts.infrastructure.web.requests.AddSetRequest;
@@ -26,7 +29,7 @@ public interface WorkoutOperations {
 
   @Post("/workouts")
   @Operation(summary = "Add new workout.")
-  void addWorkout(@Valid @Body AddWorkoutRequest request, Principal principal);
+  AddWorkoutResponse addWorkout(@Valid @Body AddWorkoutRequest request, Principal principal);
 
   @Put("/workouts/{workoutId}")
   @Operation(summary = "Update existing workout.")
@@ -38,7 +41,7 @@ public interface WorkoutOperations {
 
   @Post("/routines")
   @Operation(summary = "Add new routine.")
-  void addRoutine(@Valid @Body AddRoutineRequest request, Principal principal);
+  AddRoutineResponse addRoutine(@Valid @Body AddRoutineRequest request, Principal principal);
 
   @Put("/routines/{routineId}")
   @Operation(summary = "Update existing routine.")
@@ -50,7 +53,7 @@ public interface WorkoutOperations {
 
   @Post("/sets")
   @Operation(summary = "Add new set.")
-  void addSet(@Valid @Body AddSetRequest request, Principal principal);
+  AddSetResponse addSet(@Valid @Body AddSetRequest request, Principal principal);
 
   @Put("/sets/{setId}")
   @Operation(summary = "Update existing routine.")

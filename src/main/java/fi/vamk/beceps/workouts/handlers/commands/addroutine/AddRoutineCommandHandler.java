@@ -4,6 +4,7 @@ import fi.vamk.beceps.common.bus.command.CommandHandler;
 import fi.vamk.beceps.common.exceptions.ForbiddenException;
 import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineCommand;
+import fi.vamk.beceps.workouts.api.events.commands.addroutine.AddRoutineResponse;
 import fi.vamk.beceps.workouts.domain.Routine;
 import fi.vamk.beceps.workouts.domain.Workout;
 import fi.vamk.beceps.workouts.infrastructure.persistence.RoutineRepository;
@@ -14,12 +15,12 @@ import lombok.val;
 
 @Singleton
 @RequiredArgsConstructor
-public class AddRoutineCommandHandler implements CommandHandler<Void, AddRoutineCommand> {
+public class AddRoutineCommandHandler implements CommandHandler<AddRoutineResponse, AddRoutineCommand> {
   private final RoutineRepository routineRepository;
   private final WorkoutRepository workoutRepository;
 
   @Override
-  public Void handle(AddRoutineCommand command) {
+  public AddRoutineResponse handle(AddRoutineCommand command) {
     val workout = workoutRepository
         .findById(command.getWorkoutId())
         .orElseThrow(() -> new NotFoundException(Workout.class, command.getWorkoutId()));
@@ -31,6 +32,6 @@ public class AddRoutineCommandHandler implements CommandHandler<Void, AddRoutine
     val routine = new Routine(command.getWeekDay(), command.getWorkoutId());
     routineRepository.insert(routine);
 
-    return null;
+    return new AddRoutineResponse(routine.getId());
   }
 }

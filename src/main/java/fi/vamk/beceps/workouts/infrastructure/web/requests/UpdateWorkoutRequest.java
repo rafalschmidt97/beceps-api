@@ -1,6 +1,5 @@
 package fi.vamk.beceps.workouts.infrastructure.web.requests;
 
-import fi.vamk.beceps.common.bus.command.Command;
 import io.micronaut.core.annotation.Introspected;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Introspected
-public class UpdateWorkoutRequest implements Command<Void> {
+public class UpdateWorkoutRequest {
   @NotBlank
   @Size(max = 30)
   private String name;
