@@ -10,7 +10,7 @@ values ('abc', 1),
 
 insert into workout (`name`, user_id) values ('Workout 1', 1);
 
-insert into routine (week_day, workout_id)
+insert into routine (`name`, week_day, workout_id)
 values ('FBW1', 1, 1),
        ('FBW2', 3, 1),
        ('FBW3', 5, 1);
