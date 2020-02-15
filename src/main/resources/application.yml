@@ -44,14 +44,6 @@ datasources:
     driverClassName: com.mysql.cj.jdbc.Driver
     schema-generate: NONE
     dialect: MYSQL
-jpa:
-  default:
-    properties:
-      hibernate:
-        naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-        hbm2ddl:
-          auto: validate
-        show_sql: true
 jackson:
   serialization:
     failOnEmptyBeans: false
