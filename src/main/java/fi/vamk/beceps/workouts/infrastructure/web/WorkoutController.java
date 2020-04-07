@@ -50,7 +50,9 @@ public class WorkoutController extends SecuredController implements WorkoutOpera
 
   @Override
   public AddRoutineResponse addRoutine(@Valid AddRoutineRequest request, Principal principal) {
-    return bus.executeCommand(new AddRoutineCommand(request.getName(), request.getWeekDay(), request.getWorkoutId(), getId(principal)));
+    return bus.executeCommand(
+      new AddRoutineCommand(request.getName(), request.getWeekDay(), request.getWorkoutId(), getId(principal))
+    );
   }
 
   @Override

@@ -1,8 +1,8 @@
 package fi.vamk.beceps.common.date;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoField;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
@@ -17,7 +17,7 @@ public class TimeUtils {
   }
 
   public static int getWeekDay() {
-    return Instant.now().get(ChronoField.DAY_OF_WEEK);
+    return Instant.now().atZone(ZoneId.systemDefault()).getDayOfWeek().getValue();
   }
 
   public static Instant getWeekAgo() {
