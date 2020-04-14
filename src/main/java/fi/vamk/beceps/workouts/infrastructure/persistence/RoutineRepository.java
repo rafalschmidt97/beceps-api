@@ -33,8 +33,6 @@ public abstract class RoutineRepository implements GenericRepository<Routine, Lo
     )).stream().findFirst();
   }
 
-  public abstract Optional<Routine> findByWorkoutIdAndWeekDay(Long workoutId, int weekDay);
-
   public abstract Routine insert(Routine routine);
 
   @Transactional

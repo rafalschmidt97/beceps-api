@@ -2,11 +2,9 @@ package fi.vamk.beceps.exercises.handlers.queries.getexercises;
 
 import fi.vamk.beceps.common.bus.query.QueryHandler;
 import fi.vamk.beceps.common.date.TimeUtils;
-import fi.vamk.beceps.common.exceptions.NotFoundException;
 import fi.vamk.beceps.exercises.api.events.dto.ExerciseWorkoutDto;
 import fi.vamk.beceps.exercises.api.events.queries.getexercises.GetExercisesQuery;
 import fi.vamk.beceps.exercises.infrastructure.persistence.ExerciseRepository;
-import fi.vamk.beceps.workouts.infrastructure.persistence.RoutineRepository;
 import fi.vamk.beceps.workouts.infrastructure.persistence.WorkoutRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +16,6 @@ import lombok.val;
 @RequiredArgsConstructor
 public class GetExercisesQueryHandler implements QueryHandler<List<ExerciseWorkoutDto>, GetExercisesQuery> {
   private final WorkoutRepository workoutRepository;
-  private final RoutineRepository routineRepository;
   private final ExerciseRepository exerciseRepository;
 
   @Override
@@ -27,15 +24,9 @@ public class GetExercisesQueryHandler implements QueryHandler<List<ExerciseWorko
         .findAllByUserIdAndCreatedAtAfter(query.getUserId(), TimeUtils.getTodayMidnight());
 
     return workoutRepository
-      .findAllWithRoutinesAndSetsByUserId(query.getUserId())
+      .findAllWithRoutinesAndSetsByUserIdAndWeekDay(query.getUserId(), TimeUtils.getWeekDay())
       .stream()
-      .map(workout -> {
-        val routine = routineRepository
-            .findByWorkoutIdAndWeekDay(workout.getId(), TimeUtils.getWeekDay())
-            .orElseThrow(() -> new NotFoundException("No routines available today."));
-
-        return new ExerciseWorkoutDto(workout, routine, todayExercises);
-      })
+      .map(workoutRoutine -> new ExerciseWorkoutDto(workoutRoutine, todayExercises))
       .collect(Collectors.toList());
   }
 }

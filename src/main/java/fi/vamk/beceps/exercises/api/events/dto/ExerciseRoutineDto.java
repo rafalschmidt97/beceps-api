@@ -3,6 +3,7 @@ package fi.vamk.beceps.exercises.api.events.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import fi.vamk.beceps.exercises.domain.Exercise;
 import fi.vamk.beceps.workouts.domain.Routine;
+import fi.vamk.beceps.workouts.infrastructure.persistence.dao.WorkoutRoutine;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,22 @@ public class ExerciseRoutineDto {
     this.id = routine.getId();
     this.weekDay = routine.getWeekDay();
     this.sets = routine.getSets()
+      .stream()
+      .map(set -> {
+        val setExercises = todayExercises
+            .stream()
+            .filter(exercise -> exercise.getSetId().equals(set.getId()))
+            .collect(Collectors.toList());
+
+        return new ExerciseSetDto(set, setExercises);
+      })
+      .collect(Collectors.toList());
+  }
+
+  public ExerciseRoutineDto(WorkoutRoutine workoutRoutine, List<Exercise> todayExercises) {
+    this.id = workoutRoutine.getRoutineId();
+    this.weekDay = workoutRoutine.getWeekDay();
+    this.sets = workoutRoutine.getSets()
       .stream()
       .map(set -> {
         val setExercises = todayExercises

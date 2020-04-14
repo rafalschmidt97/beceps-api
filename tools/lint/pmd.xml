@@ -54,6 +54,7 @@
     <exclude name="BeanMembersShouldSerialize"/>
     <exclude name="UseLocaleWithCaseConversions"/>
     <exclude name="DataflowAnomalyAnalysis"/>
+    <exclude name="AvoidDuplicateLiterals"/>
   </rule>
   <rule ref="category/java/multithreading.xml">
     <exclude name="AvoidUsingVolatile"/>
