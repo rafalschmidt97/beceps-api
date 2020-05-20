@@ -2,6 +2,7 @@ package fi.vamk.beceps.common.date;
 
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import lombok.experimental.UtilityClass;
 
@@ -29,6 +30,6 @@ public class TimeUtils {
   }
 
   private static Instant getDateWithDayAddition(Instant date, int amount) {
-    return ZonedDateTime.from(date).plusDays(amount).toInstant();
+    return ZonedDateTime.ofInstant(date, ZoneOffset.ofHours(0)).plusDays(amount).toInstant();
   }
 }
