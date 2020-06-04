@@ -34,13 +34,13 @@ micronaut:
         signatures:
           secret:
             generator:
-              secret: becepsgymtoolforvamkuniversitysecret
+              secret: ${JWT_SECRET:becepsgymtoolforvamkuniversitysecret}s
               jws-algorithm: HS256
 datasources:
   default:
-    url: jdbc:mysql://localhost:3308/beceps
-    username: root
-    password: zaq1@WSX
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3308/beceps}
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:zaq1@WSX}
     driverClassName: com.mysql.cj.jdbc.Driver
     schema-generate: NONE
     dialect: MYSQL
